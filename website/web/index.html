@@ -52,9 +52,9 @@
         <section id="home" class="hero-section">
             <div class="hero-glow"></div>
             <div class="section-padding" style="padding-top: 0; padding-bottom: 0;">
-                <h1 class="hero-title" data-reveal data-i18n="hero_title">
-                    Unlock Your<br>
-                    <span class="gradient-text">Cognitive Edge.</span>
+                <h1 class="hero-title" data-reveal>
+                    <span data-i18n="hero_title_p1">Unlock Your</span><br>
+                    <span class="gradient-text" data-i18n="hero_title_p2">Cognitive Edge.</span>
                 </h1>
                 <p class="hero-desc" data-reveal data-i18n="hero_desc">
                     The world's first AI Study Agent designed specifically for high-achieving students and proactive parents who refuse to settle.
@@ -197,10 +197,10 @@
     </footer>
 
     <!-- AUTH OVERLAY VIEW -->
-    <div id="auth-view">
+    <div id="auth-view" style="display: none; position: fixed; inset: 0; z-index: 9999; background: #0e0e0e; overflow-y: auto;">
         <div class="auth-split">
             <div class="auth-left glass-effect">
-                <div class="logo-text" style="font-size: 24px; position: absolute; top: 40px; left: 60px;" onclick="goHome()">NEURALIS</div>
+                <div class="logo-text" style="font-size: 24px; position: absolute; top: 40px; left: 60px; cursor: pointer;" onclick="goHome()">NEURALIS</div>
                 <h1 class="hero-title" style="font-size: 48px; text-align: left; margin-bottom: 24px;">Gia nhập kỷ nguyên học tập mới.</h1>
                 <p class="hero-desc" style="text-align: left; margin-left: 0; margin-bottom: 40px;">Một tài khoản duy nhất cho cả Website và Ứng dụng Desktop. Bắt đầu hành trình của bạn ngay hôm nay.</p>
                 <div style="display: flex; gap: 40px;">
@@ -218,13 +218,6 @@
                         </div>
                     </div>
                     
-                    <style>
-                        .role-btn.active { background: var(--primary-color); color: #000; }
-                        .form-input { width: 100%; padding: 16px 20px; background: var(--surface-container); border: 1px solid var(--border-color); border-radius: 16px; color: white; margin-bottom: 16px; font-size: 15px; transition: 0.2s; }
-                        .form-input:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 20px var(--primary-glow); }
-                        .section-label-sm { font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 8px; letter-spacing: 1px; }
-                    </style>
-
                     <span class="section-label-sm">EMAIL HOẶC USERNAME</span>
                     <input type="text" id="auth-username" class="form-input" placeholder="student@example.com">
                     

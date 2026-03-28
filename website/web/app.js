@@ -79,6 +79,8 @@ window.changeLanguage = function(lang) {
             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                 el.placeholder = translations[lang][key];
             } else {
+                // To prevent wiping out nested spans like .gradient-text,
+                // we treat specific keys as full HTML or ignore them if the element has descendants
                 el.innerHTML = translations[lang][key];
             }
         }
@@ -147,19 +149,7 @@ function initApp() {
             preloader.style.opacity = '0';
             setTimeout(() => preloader.style.display = 'none', 600);
         }
-    }, 2500);
-
-    // --- SCROLL REVEAL ---
-    const revealCallback = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target);
-            }
-        });
-    };
-    const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.1 });
-    document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+    }, 1500);
 
     // --- HEADER SCROLL EFFECT ---
     window.addEventListener('scroll', () => {
