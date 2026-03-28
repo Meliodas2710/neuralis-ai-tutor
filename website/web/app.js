@@ -8,7 +8,8 @@ const translations = {
         nav_pricing: "Pricing",
         nav_login: "Login",
         nav_get_started: "Get Started",
-        hero_title: "Unlock Your<br>Cognitive Edge.",
+        hero_title_p1: "Unlock Your",
+        hero_title_p2: "Cognitive Edge.",
         hero_desc: "The world's first AI Study Agent designed specifically for high-achieving students and proactive parents who refuse to settle.",
         btn_transformation: "Begin Transformation",
         btn_watch: "Watch the future in 60s",
@@ -160,11 +161,29 @@ function initApp() {
 
     // --- NAVIGATION & VIEW MANAGEMENT ---
     window.showAuthView = function() {
-        document.getElementById('auth-view').style.display = 'block';
-        document.getElementById('landing-view').style.display = 'none';
-        document.querySelector('.main-header').style.display = 'none';
-        document.body.style.overflow = 'hidden';
+        console.log("Opening Auth View...");
+        const authView = document.getElementById('auth-view');
+        const landingView = document.getElementById('landing-view');
+        if (authView && landingView) {
+            authView.style.display = 'block';
+            authView.style.opacity = '1';
+            authView.style.zIndex = '9999';
+            landingView.style.display = 'none';
+            document.querySelector('.main-header').style.display = 'none';
+            document.body.style.overflow = 'hidden';
+        }
     };
+
+    // VISIBILITY FAIL-SAFE: If ScrollReveal hasn't triggered after 2s, force show everything
+    setTimeout(() => {
+        document.querySelectorAll('[data-reveal]').forEach(el => {
+            if (!el.classList.contains('active')) {
+                el.classList.add('active');
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }
+        });
+    }, 2000);
 
     window.goHome = function() {
         document.getElementById('auth-view').style.display = 'none';
