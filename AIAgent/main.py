@@ -26,7 +26,7 @@ class Api:
 
     def register(self, username, password, role="student"):
         try:
-            r = requests.post(f"{BASE_URL}/register", json={"username": username, "password": password, "role": role})
+            r = requests.post(f"{BASE_URL}/register", json={"username": username, "password": password, "role": role}, timeout=30)
             if r.status_code == 200:
                 return {"success": True, "message": "Đăng ký thành công! Mời bạn đăng nhập."}
             elif r.status_code == 429:
@@ -37,11 +37,12 @@ class Api:
                     detail = ", ".join([f"{d['loc'][-1]}: {d['msg']}" for d in detail])
                 return {"success": False, "message": f"Lỗi bảo mật: {detail}"}
         except Exception as e:
-            return {"success": False, "message": "Không thể kết nối đến Máy Chủ bảo mật."}
+            print(f"Register Error: {e}")
+            return {"success": False, "message": "Không thể kết nối đến Máy Chủ (Có thể Máy Chủ đang khởi động, vui lòng thử lại sau 30 giây)."}
 
     def login(self, username, password, role="student"):
         try:
-            r = requests.post(f"{BASE_URL}/login", json={"username": username, "password": password, "role": role})
+            r = requests.post(f"{BASE_URL}/login", json={"username": username, "password": password, "role": role}, timeout=30)
             if r.status_code == 200:
                 data = r.json()
                 user_data = data["user_data"]
@@ -73,7 +74,7 @@ class Api:
                 return {"success": False, "message": r.json().get("detail", "Sai thông tin hoặc tài khoản bị khóa.")}
         except Exception as e:
             print(f"Login Error: {e}")
-            return {"success": False, "message": f"Chi tiết lỗi nội bộ: {str(e)}"}
+            return {"success": False, "message": "Lỗi kết nối Server Online (Vui lòng đợi 30s để máy chủ khởi động)."}
 
     def logout(self):
         self.current_user_id = None

@@ -14,7 +14,16 @@ function startApp() {
                     return async (...args) => {
                         try {
                             const token = localStorage.getItem('accessToken');
-                            let url = `/${prop}`;
+                            // Fallback to absolute URL for Desktop App incorrectly entering Web Mode
+                            let endpoint = prop;
+                            if (prop === 'get_user_profile') endpoint = 'user/me';
+                            if (prop === 'get_schedules') endpoint = 'schedules/me';
+                            if (prop === 'add_schedule') endpoint = 'schedules/me';
+                            if (prop === 'delete_schedule') endpoint = `schedules/${args[0]}`;
+                            if (prop === 'get_leaderboard') endpoint = 'leaderboard';
+                            if (prop === 'get_dashboard_data') endpoint = 'sync';
+                            
+                            let url = `https://neuralis-ai-tutor.onrender.com/${endpoint}`;
                             let options = { 
                                 headers: { 
                                     'Content-Type': 'application/json',
@@ -22,44 +31,30 @@ function startApp() {
                                 } 
                             };
                             
-                            // Guess if it's POST/DELETE based on prop
-                            if (prop.startsWith('delete')) {
-                                options.method = 'DELETE';
-                                url = `/schedules/${args[0]}`; // Simplified for schedule deletion
-                            } else if (args.length > 0 && typeof args[0] === 'object' || ['login', 'register', 'sync_progress', 'add_my_schedule', 'link_account'].includes(prop)) {
+                            if (prop === 'login' || prop === 'register') {
                                 options.method = 'POST';
-                                
-                                // Mapping for specific Pro API endpoints
-                                if (prop === 'login') {
-                                    options.body = JSON.stringify({username: args[0], password: args[1], role: args[2]});
-                                } else if (prop === 'register') {
-                                    options.body = JSON.stringify({username: args[0], password: args[1], role: args[2]});
-                                } else if (prop === 'sync_progress') {
-                                    url = '/sync';
-                                    options.body = JSON.stringify({total_xp: args[0], level: args[1], badges_count: args[2]});
-                                } else if (prop === 'add_my_schedule') {
-                                    url = '/schedules/me';
-                                    options.body = JSON.stringify(args[0]);
-                                } else {
-                                    options.body = JSON.stringify(args[0] || {});
-                                }
+                                options.body = JSON.stringify({username: args[0], password: args[1], role: args[2]});
+                            } else if (prop === 'add_schedule') {
+                                options.method = 'POST';
+                                options.body = JSON.stringify({task: args[0], time: args[1], duration: args[2], strict_mode: args[3]});
+                            } else if (prop === 'delete_schedule') {
+                                options.method = 'DELETE';
                             } else {
-                                options.method = 'GET';
-                                // Handle specific GET mappings
-                                if (prop === 'get_my_schedules') url = '/schedules/me';
-                                else if (prop === 'get_user_profile' && args.length > 0) url = `/user/${args[0]}`;
-                                else if (prop === 'get_target_schedules' && args.length > 0) url = `/schedules/${args[0]}`;
+                                options.method = (args.length > 0) ? 'POST' : 'GET';
+                                if (options.method === 'POST') options.body = JSON.stringify(args[0] || {});
                             }
 
                             const response = await fetch(url, options);
+                            const result = await response.json();
                             if (!response.ok) {
-                                const err = await response.json();
-                                return { success: false, message: err.detail || 'Lỗi kết nối Server' };
+                                let msg = (typeof result.detail === 'string') ? result.detail : 
+                                            (Array.isArray(result.detail) ? result.detail[0].msg : 'Lỗi hệ thống');
+                                return { success: false, message: msg };
                             }
-                            return await response.json();
+                            return result;
                         } catch (e) {
-                            console.error(`API Call [${prop}] failed:`, e);
-                            return { success: false, message: 'Không thể kết nối tới Server Online' };
+                            console.error(`API Fallback [${prop}] failed:`, e);
+                            return { success: false, message: 'Server đang bận (Cold Start) hoặc lỗi kết nối.' };
                         }
                     };
                 }
@@ -78,8 +73,14 @@ window.addEventListener('pywebviewready', startApp);
 
 // 2. Fallback for Browsers (Web)
 document.addEventListener('DOMContentLoaded', () => {
-    // Wait 500ms to see if pywebviewready fires first, otherwise run browser init
-    setTimeout(startApp, 500);
+    // Strictly wait for pywebview if running locally (file://)
+    if (window.location.protocol === 'file:') {
+        console.log("📂 Running locally (file://) - Waiting for Desktop Bridge...");
+        // Increase wait time for Desktop Bridge
+        setTimeout(() => { if(!window.pywebview) startApp(); }, 3000);
+    } else {
+        setTimeout(startApp, 500);
+    }
 });
 
 let appInitialized = false;
@@ -149,9 +150,17 @@ function initApp() {
 
     // --- Navigation & View Switching ---
     window.showAuthView = function() {
-        document.getElementById('landing-view').style.display = 'none';
-        document.querySelector('.main-header').style.display = 'none';
-        document.getElementById('auth-view').style.display = 'flex';
+        const landing = document.getElementById('landing-view');
+        const header = document.querySelector('.main-header');
+        const auth = document.getElementById('auth-view');
+        
+        if (landing) landing.style.display = 'none';
+        if (header) header.style.display = 'none';
+        if (auth) {
+            auth.style.display = 'flex';
+            auth.style.visibility = 'visible';
+            auth.style.opacity = '1';
+        }
         if (window.lucide) window.lucide.createIcons();
     };
 
@@ -238,16 +247,22 @@ function initApp() {
         authSubmitBtn.textContent = "Đang kiểm tra bảo mật...";
         
         try {
+            // Robust Role Check
+            let r = 'student';
+            const activeRoleBtn = document.querySelector('.role-btn.active');
+            if (activeRoleBtn && activeRoleBtn.textContent.toLowerCase().includes('parent')) {
+                r = 'parent';
+            }
+            
             if (window.pywebview && window.pywebview.api) {
                 let res;
-                let r = document.querySelector('.role-btn.active').textContent.toLowerCase().includes('student') ? 'student' : 'parent';
                 if(mode === 'login') {
                     res = await window.pywebview.api.login(u, p, r);
                 } else {
                     res = await window.pywebview.api.register(u, p, r);
                     if(res.success) {
                         alert("Đăng ký thành công - Mời bạn đăng nhập.");
-                        authToggleBtn.click();
+                        if (authToggleBtn) authToggleBtn.click();
                     } else {
                         alert("Lỗi bảo mật: " + res.message);
                     }

@@ -70,12 +70,15 @@
                 </div>
             </div>
         </section>
-    </div>
+    </div> <!-- END landing-view -->
+
+    <!-- AUTH OVERLAY VIEW -->
+    <div id="auth-view" class="view-container" style="display: none; position: fixed; inset: 0; z-index: 9999; background: #0c0b1a; overflow-y: auto;">
         <div class="auth-split">
             <!-- Left Side -->
             <div class="auth-left">
-                <div class="auth-logo">
-                    <h2>The Intelligent Edge</h2>
+                <div class="auth-logo" onclick="goHome()" style="cursor: pointer;">
+                    <h2>Neuralis AI</h2>
                 </div>
                 <div class="auth-marketing">
                     <div class="auth-badge">
@@ -98,14 +101,6 @@
                             <p>FOCUS RATE</p>
                         </div>
                     </div>
-                    
-                    <button class="download-btn">
-                        <i data-lucide="download"></i>
-                        <div class="dl-text">
-                            <strong>DOWNLOAD APP</strong>
-                            <span>Available on Windows and Web</span>
-                        </div>
-                    </button>
                 </div>
                 <div class="auth-footer">
                     <p>&copy; 2026 THE INTELLIGENT EDGE. ALL RIGHTS RESERVED.</p>
@@ -136,11 +131,12 @@
                     <button class="primary-btn pulse-anim gradient-bg" id="auth-submit-btn">Login / Continue</button>
                     
                     <div class="auth-switch-container">
-                        <p class="auth-switch-text">Bạn chưa có tài khoản? <span id="auth-toggle-btn">Đăng ký ngay</span></p>
+                        <p class="auth-switch-text">Bạn chưa có tài khoản? <span id="auth-toggle-btn" style="color: var(--primary-color); cursor: pointer; text-decoration: underline;">Đăng ký ngay</span></p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
         
         <!-- Theme Toggle Button -->
         <button id="theme-toggle-btn" class="theme-toggle-fixed">
