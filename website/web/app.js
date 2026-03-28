@@ -160,40 +160,7 @@ function initApp() {
         else header.classList.remove('scrolled');
     });
 
-    // --- NAVIGATION & VIEW MANAGEMENT ---
-    window.showAuthView = function() {
-        console.log("SHOWING AUTH OVERLAY");
-        const auth = document.getElementById('auth-view');
-        const landing = document.getElementById('landing-view');
-        if (auth && landing) {
-            auth.style.display = 'block';
-            auth.style.opacity = '1';
-            auth.style.visibility = 'visible';
-            auth.style.zIndex = '9999';
-            landing.style.display = 'none';
-            document.querySelector('.main-header').style.display = 'none';
-            document.body.style.overflow = 'hidden';
-        }
-    };
-
-    // VISIBILITY FAIL-SAFE: If ScrollReveal hasn't triggered after 2s, force show everything
-    setTimeout(() => {
-        document.querySelectorAll('[data-reveal]').forEach(el => {
-            if (!el.classList.contains('active')) {
-                el.classList.add('active');
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            }
-        });
-    }, 2000);
-
-    window.goHome = function() {
-        document.getElementById('auth-view').style.display = 'none';
-        document.getElementById('landing-view').style.display = 'block';
-        document.getElementById('main-view').style.display = 'none';
-        document.querySelector('.main-header').style.display = 'block';
-        document.body.style.overflow = 'auto';
-    };
+    // --- ROLE MANAGEMENT ---
 
     window.setRole = function(role) {
         currentRole = role;
@@ -1230,6 +1197,41 @@ function initApp() {
     document.getElementById('start-study-btn').addEventListener('click', () => {
         document.getElementById('alarm-overlay').classList.remove('show');
     });
+
+    // --- NAVIGATION & VIEW MANAGEMENT ---
+    window.showAuthView = function() {
+        console.log("🔵 showAuthView called");
+        const auth = document.getElementById('auth-view');
+        const landing = document.getElementById('landing-view');
+        const mainHeader = document.querySelector('.main-header');
+        
+        if (auth && landing) {
+            auth.style.setProperty('display', 'block', 'important');
+            auth.style.setProperty('opacity', '1', 'important');
+            auth.style.setProperty('visibility', 'visible', 'important');
+            auth.style.setProperty('z-index', '99999', 'important');
+            landing.style.display = 'none';
+            if (mainHeader) mainHeader.style.display = 'none';
+            document.body.style.overflow = 'hidden';
+            console.log("✅ Auth View should be visible now");
+        } else {
+            console.error("❌ Could not find auth-view or landing-view");
+        }
+    };
+
+    window.goHome = function() {
+        console.log("🔵 goHome called");
+        const auth = document.getElementById('auth-view');
+        const landing = document.getElementById('landing-view');
+        const mainHeader = document.querySelector('.main-header');
+        
+        if (auth && landing) {
+            auth.style.display = 'none';
+            landing.style.display = 'block';
+            if (mainHeader) mainHeader.style.display = 'block';
+            document.body.style.overflow = 'auto';
+        }
+    };
 
     window.startFocusMode = function(duration_mins, strictMode) {
         document.getElementById('system-status').textContent = "Đang tập trung";
