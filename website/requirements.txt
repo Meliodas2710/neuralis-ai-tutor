@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+email-validator
+python-jose[cryptography]
+passlib[bcrypt]
+slowapi
+scalar-fastapi
+sqlite3
+typing
+typing-extensions
