@@ -72,25 +72,38 @@ const translations = {
     }
 };
 
-window.changeLanguage = function(lang) {
-    currentLang = lang;
-    localStorage.setItem('appLang', lang);
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) {
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                el.placeholder = translations[lang][key];
-            } else {
-                // To prevent wiping out nested spans like .gradient-text,
-                // we treat specific keys as full HTML or ignore them if the element has descendants
-                el.innerHTML = translations[lang][key];
-            }
-        }
-    });
-    // Update active state on buttons if any
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
-    });
+window.showAuthView = function() {
+    console.log("🔵 showAuthView called");
+    const auth = document.getElementById('auth-view');
+    const landing = document.getElementById('landing-view');
+    const mainHeader = document.querySelector('.main-header');
+    
+    if (auth && landing) {
+        auth.style.setProperty('display', 'block', 'important');
+        auth.style.setProperty('opacity', '1', 'important');
+        auth.style.setProperty('visibility', 'visible', 'important');
+        auth.style.setProperty('z-index', '99999', 'important');
+        landing.style.display = 'none';
+        if (mainHeader) mainHeader.style.display = 'none';
+        document.body.style.overflow = 'hidden';
+        console.log("✅ Auth View should be visible now");
+    } else {
+        console.error("❌ Could not find auth-view or landing-view");
+    }
+};
+
+window.goHome = function() {
+    console.log("🔵 goHome called");
+    const auth = document.getElementById('auth-view');
+    const landing = document.getElementById('landing-view');
+    const mainHeader = document.querySelector('.main-header');
+    
+    if (auth && landing) {
+        auth.style.display = 'none';
+        landing.style.display = 'block';
+        if (mainHeader) mainHeader.style.display = 'block';
+        document.body.style.overflow = 'auto';
+    }
 };
 
 // --- ENVIRONMENT DETECTION & INITIALIZATION ---
@@ -1198,26 +1211,7 @@ function initApp() {
         document.getElementById('alarm-overlay').classList.remove('show');
     });
 
-    // --- NAVIGATION & VIEW MANAGEMENT ---
-    window.showAuthView = function() {
-        console.log("🔵 showAuthView called");
-        const auth = document.getElementById('auth-view');
-        const landing = document.getElementById('landing-view');
-        const mainHeader = document.querySelector('.main-header');
-        
-        if (auth && landing) {
-            auth.style.setProperty('display', 'block', 'important');
-            auth.style.setProperty('opacity', '1', 'important');
-            auth.style.setProperty('visibility', 'visible', 'important');
-            auth.style.setProperty('z-index', '99999', 'important');
-            landing.style.display = 'none';
-            if (mainHeader) mainHeader.style.display = 'none';
-            document.body.style.overflow = 'hidden';
-            console.log("✅ Auth View should be visible now");
-        } else {
-            console.error("❌ Could not find auth-view or landing-view");
-        }
-    };
+    // --- VIEW MANAGEMENT ---
 
     window.goHome = function() {
         console.log("🔵 goHome called");
