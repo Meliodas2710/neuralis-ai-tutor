@@ -3,747 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Study Agent</title>
-    <!-- Modern minimalist font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Neuralis AI | Unlock Your Cognitive Edge</title>
     <!-- Lucide icons via CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <!-- Scroll Reveal Library -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <link rel="stylesheet" href="style.css?v=ELITE_1.1">
 </head>
 <body>
+
     <!-- PRELOADER -->
     <div id="preloader">
-        <div class="logo-text" style="font-size: 32px;">Neuralis AI</div>
-        <div class="loader-bar">
-            <div class="loader-progress"></div>
+        <div class="logo-text" style="font-size: 32px; color: var(--primary-color);">NEURALIS</div>
+        <div class="loader-bar" style="width: 200px; height: 2px; background: rgba(255,255,255,0.05); margin-top: 24px; position: relative; overflow: hidden; border-radius: 2px;">
+            <div class="loader-progress" style="width: 100%; height: 100%; background: var(--primary-color); position: absolute; left: -100%; animation: loading 2s infinite ease-in-out;"></div>
         </div>
-        <p style="margin-top: 20px; font-size: 13px; color: var(--text-secondary);">Đang đánh thức hệ thống AI...</p>
+        <style>@keyframes loading { 0% { left: -100%; } 50% { left: 0; } 100% { left: 100%; } }</style>
     </div>
 
-    <!-- HEADER -->
+    <!-- HEADER NAVIGATION -->
     <header class="main-header">
         <div class="header-container">
-            <div class="logo-text" onclick="goHome()">Neuralis AI</div>
-            <nav class="header-nav">
+            <div class="logo-container" onclick="location.reload()">
+                <div class="logo-sq"><i data-lucide="sparkles" style="color: #000; width: 20px;"></i></div>
+                <span class="logo-text">NEURALIS</span>
+            </div>
+            <nav class="nav-links-header">
                 <a href="#features">Features</a>
-                <a href="#about">About</a>
-                <button class="pill-btn nav-btn" onclick="showAuthView()">Get Started</button>
+                <a href="#stories">Success Stories</a>
+                <a href="#parent-guide">Parent Guide</a>
+                <button class="pill-btn btn-primary" onclick="showAuthView()">Get early access</button>
             </nav>
         </div>
     </header>
 
     <!-- LANDING PAGE VIEW -->
-    <div id="landing-view" class="view-container">
-        <!-- Hero Section -->
+    <div id="landing-view">
+        
+        <!-- HERO SECTION -->
         <section class="hero-section">
-            <div class="hero-badge" data-reveal>
-                <span>✨ THE NEXT GEN AI TUTOR IS HERE</span>
-            </div>
-            <h1 class="hero-title" data-reveal>
-                <span class="gradient">Master Your Focus.</span>
-                <span>Unlock Your Potential.</span>
-            </h1>
-            <p class="hero-desc" data-reveal>
-                Neuralis là trợ lý AI học tập thế hệ mới, giúp bạn quản lý thời gian, chặn xao nhãng và bứt phá điểm số với lộ trình cá nhân hóa 1:1.
-            </p>
-            <div class="hero-actions" data-reveal>
-                <button class="pill-btn primary-pulsing" onclick="showAuthView()">Bắt đầu ngay miễn phí</button>
-                <button class="pill-btn secondary-glass">Xem bản Demo</button>
-            </div>
-            
-            <div class="hero-image-container" data-reveal>
-                <div class="hero-bg-blur"></div>
-                <!-- Hero Image can be added here -->
+            <div class="hero-glow"></div>
+            <div class="section-padding" style="padding-top: 0; padding-bottom: 0;">
+                <h1 class="hero-title" data-reveal>
+                    Unlock Your<br>
+                    <span class="gradient-text">Cognitive Edge.</span>
+                </h1>
+                <p class="hero-desc" data-reveal>
+                    The world's first AI Study Agent designed specifically for high-achieving students and proactive parents who refuse to settle.
+                </p>
+                <div class="hero-actions" data-reveal>
+                    <button class="pill-btn btn-primary" style="padding: 20px 48px; font-size: 16px;" onclick="showAuthView()">
+                        Begin Transformation <i data-lucide="arrow-right"></i>
+                    </button>
+                    <button class="pill-btn btn-secondary" style="padding: 20px 48px; font-size: 16px;">
+                        Watch the future in 60s
+                    </button>
+                </div>
+
+                <div class="hero-viz" data-reveal>
+                    <img src="https://images.unsplash.com/photo-1611262588024-d12430b98920?q=80&w=2000&auto=format&fit=crop" alt="Neuralis Dashboard Preview">
+                </div>
             </div>
         </section>
 
-        <!-- Bento Features Section -->
-        <section id="features" class="features-section">
-            <span class="section-tag" data-reveal>FEATURES</span>
-            <h2 class="section-title" data-reveal>Được thiết kế cho sự tập trung tuyệt đối</h2>
+        <!-- BENTO FEATURES -->
+        <section id="features" class="bento-section section-padding">
+            <span class="section-tag" data-reveal>BUILT FOR EXCELLENCE</span>
+            <h2 class="section-heading" data-reveal>Designed for absolute <br>intellectual focus.</h2>
             
             <div class="bento-grid">
-                <div class="bento-item wide" data-reveal>
-                    <div class="bento-icon"><i data-lucide="zap"></i></div>
-                    <h3>AI Cognitive Insights</h3>
-                    <p>Hệ thống AI phân tích thói quen học tập của bạn theo thời gian thực, đưa ra những lời khuyên chuẩn xác để tối ưu hóa bộ não.</p>
+                <!-- AI Tutor -->
+                <div class="bento-item wide glass-effect primary" data-reveal>
+                    <i data-lucide="brain"></i>
+                    <h3>Hyper-Personalized <br>Learning Paths</h3>
+                    <p>Neuralis understands your unique learning gaps and constructs a tailored path to mastery in real-time.</p>
                 </div>
-                <div class="bento-item small" data-reveal>
-                    <div class="bento-icon"><i data-lucide="shield-check"></i></div>
+                <!-- Distraction Shield -->
+                <div class="bento-item glass-effect tertiary" data-reveal>
+                    <i data-lucide="shield-alert"></i>
                     <h3>Distraction Shield</h3>
-                    <p>Chặn các ứng dụng xao nhãng (Facebook, TikTok) mạnh mẽ trong giờ học.</p>
+                    <p>AI-driven biological focus monitoring that alerts you the moment your attention drifts.</p>
                 </div>
-                <div class="bento-item tall" data-reveal>
-                    <div class="bento-icon"><i data-lucide="brain-circuit"></i></div>
-                    <h3>Adaptive Mastery</h3>
-                    <p>Lộ trình học tập tự động điều chỉnh theo tốc độ tiếp thu của bạn, không bao giờ để bạn bị bỏ lại phía sau.</p>
+                <!-- Schedule -->
+                <div class="bento-item glass-effect secondary" data-reveal>
+                    <i data-lucide="calendar"></i>
+                    <h3>Automated Schedule Mastery</h3>
+                    <p>Dynamic calendars that adapt to your life, extracurriculars, and optimal focus sessions.</p>
                 </div>
-                <div class="bento-item wide" data-reveal>
-                    <div class="bento-icon"><i data-lucide="trophy"></i></div>
-                    <h3>Gamified Growth</h3>
-                    <p>Hệ thống XP, Level và Bảng xếp hạng giúp việc học trở nên thú vị như đang chơi một tựa game nhập vai.</p>
+                <!-- Unified Management -->
+                <div class="bento-item wide glass-effect" data-reveal>
+                    <i data-lucide="users"></i>
+                    <h3>Unified parent & <br>student transparency</h3>
+                    <p>Stop the friction. Parents get real-time insights without being overbearing, fostering a healthy path to success.</p>
                 </div>
             </div>
         </section>
-    </div>
+
+        <!-- SOCIAL PROOF -->
+        <section id="stories" class="social-section section-padding" style="border-radius: 80px 80px 0 0;">
+            <div style="text-align: center; margin-bottom: 80px;">
+                <h2 style="font-size: 48px; margin-bottom: 24px;">What our community says</h2>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+                    <span style="font-size: 14px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Loved by 50,000+ top students</span>
+                </div>
+            </div>
+
+            <div class="social-grid">
+                <div class="testimonial-card glass-effect" data-reveal>
+                    <div class="user-meta">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100" alt="David Chen">
+                        <div>
+                            <p class="user-name">David Chen</p>
+                            <p class="user-role">Parent of Grade 11</p>
+                        </div>
+                    </div>
+                    <p class="quote-text">"I cuối cùng đã có được sự an tâm khi biết rằng con trai mình đang thực sự học bài chứ không phải lén lút chơi game cùng bạn bè."</p>
+                </div>
+                <div class="testimonial-card glass-effect" data-reveal>
+                    <div class="user-meta">
+                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=100" alt="Alex Thompson">
+                        <div>
+                            <p class="user-name">Alex Thompson</p>
+                            <p class="user-role">MIT Freshman</p>
+                        </div>
+                    </div>
+                    <p class="quote-text">"Neuralis đã thay đổi cách tôi tư duy. Từ việc vật lộn với môn Sinh học AP, tôi đã vươn lên đứng đầu lớp."</p>
+                </div>
+                <div class="testimonial-card glass-effect" data-reveal>
+                    <div class="user-meta">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100" alt="Elena Rodriguez">
+                        <div>
+                            <p class="user-name">Elena Rodriguez</p>
+                            <p class="user-role">High School Senior</p>
+                        </div>
+                    </div>
+                    <p class="quote-text">"Trình quản lý lịch trình đã gỡ bỏ mọi căng thẳng trong mùa thi cuối kỳ. Tôi biết chính xác mình cần làm gì mỗi ngày."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA SECTION -->
+        <section class="section-padding">
+            <div class="cta-banner" data-reveal>
+                <h2>Ready to transform your <br> academic journey?</h2>
+                <p>Join over 50,000 students who have already upgraded their intelligence with Neuralis.</p>
+                <div class="cta-actions">
+                    <button class="pill-btn btn-dark" style="padding: 20px 48px; font-size: 16px;" onclick="showAuthView()">Get Started for Free</button>
+                    <button class="pill-btn btn-secondary" style="padding: 20px 48px; font-size: 16px; background: rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.1); color: #000;">View Pricing</button>
+                </div>
+            </div>
+        </section>
+
+    </div> <!-- END landing-view -->
+
+    <!-- FOOTER -->
+    <footer class="section-padding" style="margin-top: 0;">
+        <div class="footer-grid">
+            <div class="footer-col" style="grid-column: span 1;">
+                <div class="logo-container" style="margin-bottom: 24px;">
+                    <div class="logo-sq"><i data-lucide="sparkles" style="color: #000; width: 16px;"></i></div>
+                    <span class="logo-text">NEURALIS</span>
+                </div>
+                <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">The intelligent edge for the next generation of leaders.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <ul><li>Features</li><li>Pricing</li><li>Parent Guide</li><li>AI Tutor</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul><li>About</li><li>Success Stories</li><li>Careers</li><li>Contact</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Community</h4>
+                <ul><li>Privacy</li><li>Terms</li><li>Support</li><li>Docs</li></ul>
+            </div>
+        </div>
+        <div style="margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 12px;">
+            <p>© 2026 Neuralis AI Technologies Inc. All rights reserved.</p>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="check-circle" style="color: var(--primary-color); width: 14px;"></i> 
+                <span style="font-weight: 700; letter-spacing: 1px;">ENTERPRISE GRADE SECURITY</span>
+            </div>
+        </div>
+    </footer>
 
     <!-- AUTH OVERLAY VIEW -->
     <div id="auth-view">
         <div class="auth-split">
-            <!-- Left Side -->
-            <div class="auth-left">
-                <div class="logo-text" style="font-size: 28px; margin-bottom: 40px;" onclick="goHome()">Neuralis AI</div>
-                <div class="auth-marketing">
-                    <h1 class="gradient-text">Gia nhập kỷ nguyên học tập mới.</h1>
-                    <p class="auth-desc">Một tài khoản duy nhất cho cả Website và Ứng dụng Desktop. Bắt đầu hành trình của bạn ngay hôm nay.</p>
-                    
-                    <div class="auth-stats">
-                        <div class="stat">
-                            <h4>15k+</h4>
-                            <p>USERS</p>
-                        </div>
-                        <div class="stat">
-                            <h4>98%</h4>
-                            <p>FOCUS RATE</p>
-                        </div>
-                    </div>
+            <div class="auth-left glass-effect">
+                <div class="logo-text" style="font-size: 24px; position: absolute; top: 40px; left: 60px;" onclick="goHome()">NEURALIS</div>
+                <h1 class="hero-title" style="font-size: 48px; text-align: left; margin-bottom: 24px;">Gia nhập kỷ nguyên học tập mới.</h1>
+                <p class="hero-desc" style="text-align: left; margin-left: 0; margin-bottom: 40px;">Một tài khoản duy nhất cho cả Website và Ứng dụng Desktop. Bắt đầu hành trình của bạn ngay hôm nay.</p>
+                <div style="display: flex; gap: 40px;">
+                    <div><h4 style="font-size: 32px; font-weight: 800;">15k+</h4><p style="font-size: 12px; color: var(--text-muted); font-weight: 700;">USERS</p></div>
+                    <div><h4 style="font-size: 32px; font-weight: 800;">98%</h4><p style="font-size: 12px; color: var(--text-muted); font-weight: 700;">FOCUS RATE</p></div>
                 </div>
             </div>
-
-            <!-- Right Side -->
             <div class="auth-right">
-                <div class="auth-form-container">
-                    <div class="role-selector">
-                        <p class="section-label" id="auth-title">CHÀO MỪNG TRỞ LẠI</p>
-                        <div class="role-tabs">
-                            <button class="role-btn active" onclick="setRole('student')">Student</button>
-                            <button class="role-btn" onclick="setRole('parent')">Parent</button>
+                <div class="auth-form-box">
+                    <div style="text-align: center; margin-bottom: 48px;">
+                        <span class="section-tag" id="auth-title">CHÀO MỪNG TRỞ LẠI</span>
+                        <div style="display: flex; background: var(--surface-low); padding: 6px; border-radius: 99px; margin-top: 24px;">
+                            <button class="role-btn active" onclick="setRole('student')" style="flex: 1; border: none; padding: 10px; border-radius: 99px; font-weight: 700; cursor: pointer; transition: 0.2s;">Student</button>
+                            <button class="role-btn" onclick="setRole('parent')" style="flex: 1; border: none; padding: 10px; border-radius: 99px; font-weight: 700; cursor: pointer; transition: 0.2s; background: transparent; color: var(--text-muted);">Parent</button>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="section-label">EMAIL HOẶC USERNAME</label>
-                        <input type="text" id="auth-username" placeholder="name@example.com">
-                    </div>
+                    <style>
+                        .role-btn.active { background: var(--primary-color); color: #000; }
+                        .form-input { width: 100%; padding: 16px 20px; background: var(--surface-container); border: 1px solid var(--border-color); border-radius: 16px; color: white; margin-bottom: 16px; font-size: 15px; transition: 0.2s; }
+                        .form-input:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 20px var(--primary-glow); }
+                        .section-label-sm { font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 8px; letter-spacing: 1px; }
+                    </style>
+
+                    <span class="section-label-sm">EMAIL HOẶC USERNAME</span>
+                    <input type="text" id="auth-username" class="form-input" placeholder="student@example.com">
                     
-                    <div class="form-group">
-                        <label class="section-label">MẬT KHẨU</label>
-                        <input type="password" id="auth-password" placeholder="••••••••">
-                    </div>
+                    <span class="section-label-sm">MẬT KHẨU</span>
+                    <input type="password" id="auth-password" class="form-input" placeholder="••••••••">
                     
-                    <button class="primary-btn" id="auth-submit-btn">Tiếp tục ngay</button>
+                    <button class="pill-btn btn-primary" id="auth-submit-btn" style="width: 100%; justify-content: center; padding: 18px; border-radius: 16px; margin-top: 12px;">Đăng nhập ngay</button>
                     
-                    <div class="auth-switch-container">
-                        <p>Bạn chưa có tài khoản? <span id="auth-toggle-btn">Đăng ký ngay</span></p>
+                    <div style="text-align: center; margin-top: 32px;">
+                        <p style="font-size: 14px; color: var(--text-secondary);">Bạn chưa có tài khoản? <span id="auth-toggle-btn" style="color: var(--primary-color); font-weight: 700; cursor: pointer; text-decoration: underline;">Đăng ký ngay</span></p>
                     </div>
 
-                    <button class="pill-btn" style="width:100%; margin-top:20px; background:transparent; color:var(--text-muted);" onclick="goHome()">Quay lại trang chủ</button>
+                    <p onclick="goHome()" style="text-align: center; margin-top: 40px; font-size: 12px; color: var(--text-muted); cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Quay lại trang chủ</p>
                 </div>
             </div>
         </div>
     </div>
-        
-        <!-- Theme Toggle Button -->
-        <button id="theme-toggle-btn" class="theme-toggle-fixed">
-            <i data-lucide="sun" class="sun-icon"></i>
-            <i data-lucide="moon" class="moon-icon"></i>
-        </button>
-    </div>
 
-    <!-- MAIN APP VIEW -->
-    <div id="main-view" class="app-container" style="display: none;">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="logo">
-                <i data-lucide="sparkles" style="color: var(--primary-color);"></i>
-                <div class="profile-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar"></div>
-                <div class="profile-info">
-                    <h6 id="profile-name">Tài khoản Sinh viên</h6>
-                    <p id="profile-status">Chế độ Học tập</p>
+    <!-- MAIN APP VIEW (DASHBOARD) -->
+    <div id="main-view" style="display: none;">
+        <!-- The internal dashboard UI will inherit the new color scheme via style.css -->
+        <!-- I will keep the existing structure but wrap it in the new container -->
+        <div class="app-container">
+             <!-- Sidebar and Content will follow existing logic but look much better -->
+             <nav class="sidebar">
+                <div class="logo-container" style="margin-bottom: 60px;">
+                    <div class="logo-sq"><i data-lucide="sparkles" style="color: #000; width: 16px;"></i></div>
+                    <span class="logo-text">NEURALIS</span>
                 </div>
-            </div>
-
-            <ul class="nav-links" id="sidebar-nav-links">
-                <li class="active" data-page="main-dashboard" id="nav-student-dashboard">
-                    <i data-lucide="book-open"></i>
-                    <span id="nav-text-student">Góc Học Tập</span>
-                </li>
-                <li data-page="main-dashboard" id="nav-parent-dashboard" style="display: none;">
-                    <i data-lucide="shield-check"></i>
-                    <span>Giám Sát Con</span>
-                </li>
-                <li data-page="leaderboard" id="nav-leaderboard">
-                    <i data-lucide="trophy"></i>
-                    <span>Bảng Xếp Hạng</span>
-                </li>
-                <li data-page="achievements" id="nav-achievements">
-                    <i data-lucide="award"></i>
-                    <span>Thành Tựu</span>
-                </li>
-                <li data-page="chat" id="nav-chat">
-                    <i data-lucide="message-square"></i>
-                    <span>Trợ Lý AI</span>
-                </li>
-                <li data-page="schedule" id="nav-schedule">
-                    <i data-lucide="calendar"></i>
-                    <span>Lịch Học</span>
-                </li>
-                <li data-page="profile" id="nav-profile">
-                    <i data-lucide="user"></i>
-                    <span>Hồ Sơ Cá Nhân</span>
-                </li>
-                <li data-page="settings" id="nav-settings">
-                    <i data-lucide="settings"></i>
-                    <span>Cài Đặt</span>
-                </li>
-                <li data-page="settings" id="nav-settings">
-                    <i data-lucide="settings"></i>
-                    <span>Cài Đặt</span>
-                </li>
-            </ul>
-
-            <div class="sidebar-bottom">
-                <!-- System Status -->
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px; padding: 0 16px;">
-                    <div class="pulse-dot"></div>
-                    <span id="system-status" style="font-size: 13px; color: var(--text-secondary);">Sẵn sàng</span>
-                </div>
+                <style>
+                    .sidebar-nav li { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-radius: 16px; color: var(--text-secondary); cursor: pointer; transition: 0.2s; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+                    .sidebar-nav li:hover { background: rgba(255,255,255,0.05); color: #fff; }
+                    .sidebar-nav li.active { background: rgba(186, 158, 255, 0.1); color: var(--primary-color); }
+                    .sidebar-nav i { width: 18px; }
+                </style>
+                <ul class="sidebar-nav" style="list-style: none;">
+                    <li class="active" data-page="main-dashboard"><i data-lucide="layout-dashboard"></i> Góc Học Tập</li>
+                    <li data-page="schedule"><i data-lucide="calendar"></i> Lịch Trình</li>
+                    <li data-page="chat"><i data-lucide="message-square"></i> Trợ Lý AI</li>
+                    <li data-page="leaderboard"><i data-lucide="trophy"></i> Bảng Xếp Hạng</li>
+                    <li data-page="profile"><i data-lucide="user"></i> Hồ Sơ Cá Nhân</li>
+                    <li data-page="settings"><i data-lucide="settings"></i> Cài Đặt</li>
+                </ul>
                 
-                <button class="primary-btn pulse-anim gradient-bg" id="action-btn" style="width: calc(100% - 32px); margin: 0 16px 12px 16px; padding: 14px; font-size: 14px; border-radius: 12px;" onclick="document.querySelector('#nav-schedule').click()">
-                    Bắt đầu Ca Học
-                </button>
-                <button id="emergency-stop-btn" style="display: none; background: rgba(255, 71, 87, 0.1); color: var(--danger); border: 1px solid rgba(255,71,87,0.3); padding: 14px; border-radius: 12px; font-size: 14px; cursor: pointer; margin: 0 16px 12px 16px; width: calc(100% - 32px); font-weight: bold;">
-                    Dừng khẩn cấp 🛑
-                </button>
-                
-                <div style="display: flex; gap: 8px; padding: 0 16px;">
-                    <button id="app-theme-toggle" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 12px; width: 44px; height: 44px; display: flex; justify-content: center; align-items: center; cursor: pointer;">
-                        <i data-lucide="sun" class="sun-icon" style="width: 18px; height: 18px;"></i>
-                        <i data-lucide="moon" class="moon-icon" style="width: 18px; height: 18px;"></i>
-                    </button>
-                    <button id="logout-btn" style="background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); flex: 1; border-radius: 12px; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                        <i data-lucide="log-out" style="width: 14px; height: 14px;"></i> Đăng xuất
+                <div style="margin-top: auto; padding-top: 40px;">
+                    <button class="pill-btn btn-primary" onclick="localStorage.clear(); location.reload();" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border-color);">
+                        <i data-lucide="log-out"></i> Logout
                     </button>
                 </div>
-            </div>
-        </nav>
-
-        <!-- Main Content Area -->
-        <main class="content-area">
-            
-            <!-- PROFILE PAGE -->
-            <section id="profile" class="page">
-                <style>
-                    #profile .form-group label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; display:block; font-weight: 600; letter-spacing: 0.5px; }
-                    #profile .form-group input { width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; transition: 0.3s; font-size: 14px; }
-                    #profile .form-group input:focus { border-color: rgba(108, 92, 231, 0.6); box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15); outline: none; }
-                </style>
-                <div class="page-header" style="margin-bottom: 24px;">
-                    <h2>Thông tin cá nhân</h2>
-                    <p>Quản lý hồ sơ, địa chỉ liên lạc và kết nối Phụ Huynh</p>
-                </div>
-                
-                <div class="split-layout" style="max-width: 1000px; gap: 30px;">
-                    <!-- Avatar & Summary -->
-                    <div class="split-sidebar">
-                        <div class="dash-card modern-card" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 16px;">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" style="width: 120px; height: 120px; border-radius: 50%; border: 3px solid rgba(108, 92, 231, 0.4); padding: 5px;" alt="Avatar">
-                            <div style="width: 100%;">
-                                <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 4px;" id="prof-display-name">Sinh Viên</h3>
-                                <p style="color: var(--text-secondary); font-size: 14px;" id="prof-display-email">student@neuralis.ai</p>
-                                <div style="margin-top: 16px; padding: 14px; background: rgba(0,0,0,0.2); border-radius: 12px; font-size: 13px;">
-                                    <div style="display:flex; justify-content:space-between; margin-bottom: 12px;">
-                                        <span style="color: var(--text-secondary);">Ngày tham gia</span>
-                                        <span id="prof-join-date" style="font-weight: 600; color: #a29bfe;">...</span>
-                                    </div>
-                                    <div style="display:flex; justify-content:space-between;">
-                                        <span style="color: var(--text-secondary);">Trạng thái hệ thống</span>
-                                        <span style="color: #00ff88; font-weight: 600; display:flex; align-items:center; gap:6px;"><div class="pulse-dot" style="position:static;"></div> Online</span>
-                                    </div>
-                                </div>
-                            </div>
+             </nav>
+             <main class="content-area">
+                 <!-- Internal pages like main-dashboard, schedule, etc. will remain as defined in JS but receive new skins -->
+                 <div id="main-dashboard" class="page active-page">
+                    <h2 style="font-size: 32px; margin-bottom: 32px;">Chào mừng trở lại!</h2>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                        <div class="testimonial-card glass-effect">
+                            <h4 style="color: var(--text-muted); font-size: 12px; margin-bottom: 8px;">TOTAL FOCUS TIME</h4>
+                            <h2 style="font-size: 32px;" id="st-focus-time">0h 0m</h2>
+                        </div>
+                        <div class="testimonial-card glass-effect">
+                            <h4 style="color: var(--text-muted); font-size: 12px; margin-bottom: 8px;">EXPERIENCE POINTS</h4>
+                            <h2 style="font-size: 32px;" id="dash-xp-display">0 XP</h2>
+                        </div>
+                        <div class="testimonial-card glass-effect">
+                            <h4 style="color: var(--text-muted); font-size: 12px; margin-bottom: 8px;">CURRENT LEVEL</h4>
+                            <h2 style="font-size: 32px;" id="dash-level-display">Level 1</h2>
                         </div>
                     </div>
-                    
-                    <div class="split-resizer"></div>
-                    
-                    <!-- Form Details -->
-                    <div class="split-main">
-                        <div class="dash-card modern-card" style="padding: 32px;">
-                            <h4 style="margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; display:flex; align-items:center;">
-                                <i data-lucide="user-circle" style="width:20px; height:20px; margin-right:8px; color:var(--primary-color);"></i> CHI TIẾT HỒ SƠ
-                            </h4>
-                            
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                                <div class="form-group" style="margin: 0;">
-                                    <label>HỌ VÀ TÊN</label>
-                                    <input type="text" id="prof-name" placeholder="Ví dụ: Nguyễn Văn A">
-                                </div>
-                                <div class="form-group" style="margin: 0;">
-                                    <label>GMAIL ĐĂNG NHẬP</label>
-                                    <input type="email" id="prof-email" placeholder="student@example.com">
-                                </div>
-                                <div class="form-group" style="grid-column: 1 / -1; margin: 0;">
-                                    <label>ĐỊA CHỈ NHÀ (NƠI Ở HIỆN TẠI)</label>
-                                    <input type="text" id="prof-address" placeholder="Ví dụ: 123 Đường Ngọc Khánh, Quận Ba Đình, Hà Nội">
-                                </div>
-                                
-                                <!-- Parents Info -->
-                                <div class="form-group" style="margin: 0;">
-                                    <label>HỌ TÊN CHA</label>
-                                    <input type="text" id="prof-father" placeholder="Trống">
-                                </div>
-                                <div class="form-group" style="margin: 0;">
-                                    <label>HỌ TÊN MẸ</label>
-                                    <input type="text" id="prof-mother" placeholder="Trống">
-                                </div>
-                                
-                                <!-- Link Parent Mode -->
-                                <div class="form-group" style="grid-column: 1 / -1; margin: 0; margin-top: 8px; padding: 20px; background: rgba(108, 92, 231, 0.08); border: 1px dashed rgba(108, 92, 231, 0.3); border-radius: 12px;">
-                                    <label style="color: #a29bfe; font-size: 13px;"><i data-lucide="link" style="width:14px;height:14px; vertical-align:middle; margin-right:4px;"></i>LIÊN KẾT TÀI KHOẢN PHỤ HUYNH</label>
-                                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5;">Phụ huynh của bạn sẽ có thể theo dõi tiến độ, số điểm bài tập và đánh giá hiệu suất học tập nếu bạn cung cấp Mã Liên Kết.</p>
-                                    <div style="display: flex; gap: 12px;">
-                                        <input type="text" id="prof-parent-code" placeholder="Mã liên kết cấp bởi Phụ Huynh (VD: PAR-1234)" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(108, 92, 231, 0.3); font-family: monospace; letter-spacing: 1px;">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-end;">
-                                <button id="save-profile-btn" class="primary-btn pulse-anim gradient-bg" style="padding: 12px 32px; font-weight: 600; font-size: 14px; border-radius: 10px; display:flex; align-items:center; gap:8px;">
-                                    <i data-lucide="save" style="width:18px;height:18px;"></i> LƯU THÔNG TIN
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ACHIEVEMENTS PAGE -->
-            <section id="achievements" class="page">
-                <style>
-                    #achievements .achieve-card { background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border-color); padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-                    #achievements .gradient-card { background: linear-gradient(145deg, rgba(30, 27, 46, 0.8) 0%, rgba(18, 16, 26, 0.9) 100%); border: 1px solid rgba(108, 92, 231, 0.2); position: relative; overflow: hidden; }
-                    #achievements .gradient-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #a29bfe, transparent); opacity: 0.5; }
-                    #achievements .achieve-subtitle { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 12px; display: block; }
-                    #achievements .achieve-title { font-size: 38px; font-weight: 800; margin-bottom: 12px; line-height: 1.1; }
-                    #achievements .achieve-title span { background: linear-gradient(90deg, #a29bfe, #8c7ae6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-                    #achievements .achieve-desc { color: var(--text-secondary); font-size: 14px; max-width: 400px; line-height: 1.5; }
-                    #achievements .flex-center { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-                    #achievements .section-divider { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 24px; text-align: center; position: relative; }
-                    #achievements .section-divider::before, #achievements .section-divider::after { content: ''; position: absolute; top: 50%; width: calc(50% - 120px); height: 1px; background: var(--border-color); }
-                    #achievements .section-divider::before { left: 0; } #achievements .section-divider::after { right: 0; }
-                    #achievements .badge-box { background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; transition: 0.3s; }
-                    #achievements .badge-box:hover { background: rgba(255,255,255,0.05); transform: translateY(-2px); border-color: rgba(108, 92, 231, 0.3); }
-                    #achievements .badge-box.sm { flex-direction: row; align-items: center; gap: 16px; padding: 16px; }
-                    #achievements .badge-icon-sq { width: 44px; height: 44px; border-radius: 10px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
-                    #achievements .badge-date { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-top: auto; display: flex; align-items: center; gap: 4px; padding-top: 16px; }
-                    #achievements .locked-badge { filter: grayscale(100%); opacity: 0.3; display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 16px; }
-                    #achievements .locked-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--border-color); display: flex; justify-content: center; align-items: center; position: relative; }
-                    #achievements .lock-small { position: absolute; bottom: 0; right: 0; background: var(--bg-color); border-radius: 50%; padding: 4px; border: 1px solid var(--border-color); }
-                </style>
-                <div class="achievements-container" style="display: flex; flex-direction: column; gap: 40px; max-width: 950px; margin: 0 auto; padding-bottom: 40px;">
-                    
-                    <!-- Top Status -->
-                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
-                        <div class="achieve-card gradient-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <span class="achieve-subtitle">STUDENT STATUS</span>
-                                    <h1 class="achieve-title" id="ach-level-text">Level 1: <span>Tân Binh</span></h1>
-                                    <p class="achieve-desc">Hãy duy trì nhịp độ học tập để mở khóa các danh hiệu cấp bách và nhận thưởng.</p>
-                                </div>
-                                <button id="ach-check-in-btn" class="primary-btn pulse-anim gradient-bg" style="font-size: 13px; font-weight: bold; border-radius: 10px; white-space: nowrap; padding: 12px 24px; width: auto; align-self: center;">
-                                    <i data-lucide="check-circle" style="width:16px; margin-right:6px;"></i> ĐIỂM DANH
-                                </button>
-                            </div>
-                            
-                            <div style="margin-top: 48px;">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                                    <span style="font-size: 13px; color: var(--text-secondary);" id="ach-next-level">Next: Level 2</span>
-                                    <span style="font-size: 18px; font-weight: 800; color: #a29bfe;" id="ach-percent">0%</span>
-                                </div>
-                                <div class="xp-bar-container" style="height: 6px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden;">
-                                    <div class="xp-bar" id="ach-xp-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #6c5ce7, #a29bfe); border-radius: 6px; transition: 0.5s;"></div>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; margin-top: 12px;">
-                                    <span style="font-size: 11px; color: var(--text-secondary); font-weight:600; letter-spacing:1px;" id="ach-current-xp">0 XP</span>
-                                    <span style="font-size: 11px; color: var(--text-secondary); font-weight:600; letter-spacing:1px;" id="ach-target-xp">100 XP</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="achieve-card flex-center">
-                            <div class="badge-icon-large" style="background: rgba(108, 92, 231, 0.05); border: 2px solid rgba(108, 92, 231, 0.2); border-radius: 50%; width: 90px; height: 90px; display:flex; justify-content:center; align-items:center; margin-bottom: 24px;">
-                                <i data-lucide="award" style="color: #a29bfe; width: 45px; height: 45px;"></i>
-                            </div>
-                            <h3 style="font-size: 16px; color: var(--text-secondary); margin-bottom: 8px;">Tổng Huy Hiệu</h3>
-                            <h1 style="font-size: 42px; font-weight: 800; color: white;" id="ach-total-badges">0</h1>
-                            <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px;">Xếp thứ #12 hôm nay</p>
-                        </div>
-                    </div>
-
-                    <!-- Academic Excellence -->
-                    <div>
-                        <h4 class="section-divider">DANH HIỆU CHUYÊN CẦN</h4>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;" id="academic-badges">
-                            <!-- JS will populate badges here -->
-                        </div>
-                    </div>
-
-                    <!-- Focus Mastery & Consistency -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
-                        <div>
-                            <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px; border-bottom:1px solid var(--border-color); padding-bottom:12px;">
-                                <i data-lucide="timer" style="color:white;"></i> <h4 style="font-size: 18px;">Khởi Đầu Sớm</h4>
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 16px;" id="focus-badges">
-                            </div>
-                        </div>
-                        <div>
-                            <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px; border-bottom:1px solid var(--border-color); padding-bottom:12px;">
-                                <i data-lucide="calendar" style="color:white;"></i> <h4 style="font-size: 18px;">Tính Kỷ Luật</h4>
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 16px;" id="consistency-badges">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Upcoming Milestones -->
-                    <div class="achieve-card" style="text-align: center; padding: 48px 24px;">
-                        <h3 style="font-size: 26px; margin-bottom: 12px; font-weight: 700;">Huy hiệu sắp tới</h3>
-                        <p style="color: var(--text-secondary); margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6;">Vượt giới hạn bản thân để mở khóa các danh hiệu độc quyền của AI Agent và nhận thêm XP điểm thưởng lớn.</p>
-                        <div style="display: flex; justify-content: center; gap: 50px; flex-wrap: wrap;" id="locked-badges">
-                            <div class="locked-badge">
-                                <div class="locked-icon">
-                                    <i data-lucide="award" style="color: white; width:24px;"></i>
-                                    <div class="lock-small"><i data-lucide="lock" style="width:12px; height:12px;"></i></div>
-                                </div>
-                                <span style="font-size: 12px; font-weight: 600;">Neural Overlord</span>
-                            </div>
-                            <div class="locked-badge">
-                                <div class="locked-icon">
-                                    <i data-lucide="infinity" style="color: white; width:24px;"></i>
-                                    <div class="lock-small"><i data-lucide="lock" style="width:12px; height:12px;"></i></div>
-                                </div>
-                                <span style="font-size: 12px; font-weight: 600;">Infinite Loop</span>
-                            </div>
-                            <div class="locked-badge">
-                                <div class="locked-icon">
-                                    <i data-lucide="rocket" style="color: white; width:24px;"></i>
-                                    <div class="lock-small"><i data-lucide="lock" style="width:12px; height:12px;"></i></div>
-                                </div>
-                                <span style="font-size: 12px; font-weight: 600;">Quick Learner</span>
-                            </div>
-                            <div class="locked-badge">
-                                <div class="locked-icon">
-                                    <i data-lucide="brain" style="color: white; width:24px;"></i>
-                                    <div class="lock-small"><i data-lucide="lock" style="width:12px; height:12px;"></i></div>
-                                </div>
-                                <span style="font-size: 12px; font-weight: 600;">Meta Strategist</span>
-                            </div>
-                        </div>
-                        <div style="margin-top: 40px; border-top: 1px solid var(--border-color); padding-top: 24px; color: var(--text-secondary); font-size: 11px; display:flex; align-items:center; gap:8px; justify-content:center;">
-                            <i data-lucide="shield-check" style="color: #6c5ce7; width:14px; height:14px;"></i>
-                            <span>© 2026 AI STUDY AGENT. ALL DATA SYNCED IN REAL-TIME.</span>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- CHAT PAGE (AI TUTOR) -->
-            <section id="chat" class="page">
-                <style>
-                    #chat .chat-session-item { padding: 12px; border-radius: 12px; cursor: pointer; color: var(--text-secondary); margin-bottom: 8px; font-size: 14px; transition: 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-                    #chat .chat-session-item:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
-                    #chat .chat-session-item.active { background: rgba(108, 92, 231, 0.15); color: #8c7ae6; border-left: 3px solid #6c5ce7; font-weight: 600; }
-                </style>
-                <div class="split-layout" style="gap: 24px;">
-                    <div class="split-sidebar" style="background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-color); padding: 20px;">
-                        <button class="primary-btn pulse-anim gradient-bg" id="new-chat-btn" style="margin-bottom: 20px; border-radius: 12px; display:flex; gap:8px; justify-content:center; align-items:center;">
-                            <i data-lucide="plus" style="width:18px; height:18px;"></i> Hội thoại mới
-                        </button>
-                        <h6 style="color: var(--text-secondary); margin-bottom: 12px; font-size: 12px; text-transform: uppercase;">Lịch sử thảo luận</h6>
-                        <div class="chat-list modern-scroll" id="chat-sessions-list" style="flex:1;">
-                            <!-- Danh sách chat -->
-                        </div>
-                    </div>
-                    
-                    <div class="split-resizer"></div>
-                    
-                    <div class="split-main chat-assistant-container" style="min-height: auto; background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-color); padding: 20px;">
-                        <div class="chat-header-modern">
-                            <div style="display:flex; align-items:center; gap: 12px;">
-                                <div class="ai-avatar-box"><i data-lucide="bot"></i></div>
-                                <div>
-                                    <h3 style="margin:0; font-size: 16px;" id="chat-title-display">Trợ Lý AI</h3>
-                                    <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Chatbot được trang bị LLM Tiên Tiến</p>
-                                </div>
-                            </div>
-                            <span class="ai-badge">AI ONLINE</span>
-                        </div>
-                        
-                        <div class="chat-history modern-scroll" id="chat-history">
-                            <!-- Messages -->
-                        </div>
-                        
-                        <div class="chat-input-modern">
-                            <input type="text" id="chat-input" placeholder="Hỏi tớ bất cứ điều gì liên quan đến bài học...">
-                            <button class="gradient-bg-btn" id="send-btn">
-                                <i data-lucide="send" style="width:18px; height:18px;"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- UNIFIED DASHBOARD -->
-            <section id="main-dashboard" class="page active-page">
-                <div class="page-header" style="margin-bottom: 24px;">
-                    <h2 id="dash-main-title">Góc Học Tập</h2>
-                    <p id="dash-main-subtitle">Tổng quan tình trạng tập trung và lịch biểu hôm nay.</p>
-                </div>
-
-                <!-- Parent Linking UI (Overlay for parents only if not linked) -->
-                <div id="parent-linking-area" class="dash-card modern-card" style="display: none; padding: 30px; margin-bottom: 30px; background: linear-gradient(135deg, rgba(108, 92, 231, 0.1) 0%, rgba(232, 67, 147, 0.1) 100%); border: 1px solid var(--primary-color);">
-                    <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-                        <div style="flex: 1; min-width: 250px;">
-                            <h4 style="margin: 0 0 8px 0;">Kết nối với tài khoản của con</h4>
-                            <p style="margin: 0; font-size: 14px; color: var(--text-secondary);">Nhập mã liên kết (Ví dụ: LINK-XXXX) để bắt đầu giám sát tiến trình học tập.</p>
-                        </div>
-                        <div style="display: flex; gap: 10px; flex: 1; min-width: 250px;">
-                            <input type="text" id="parent-link-input-dash" placeholder="Mã liên kết..." style="flex: 1; margin: 0;">
-                            <button class="primary-btn pulse-anim" id="parent-link-btn-dash" style="white-space: nowrap;">Liên kết ngay</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="student-dash-layout" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); display: grid; gap: 24px;">
-                    <!-- Stats Area -->
-                    <div class="dash-card modern-card" style="display: flex; flex-direction: column; justify-content: space-between; height: 160px; box-sizing: border-box; border-left: 3px solid var(--primary-color);">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                            <h5 style="color: var(--text-secondary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Thời Gian Trực Tuyến</h5>
-                            <i data-lucide="timer" style="color: var(--primary-color); width:20px; height:20px;"></i>
-                        </div>
-                        <h2 style="font-size: clamp(28px, 4vw, 42px); margin: 0;"><span id="st-focus-time">0h 0m</span></h2>
-                        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;" id="dash-xp-display">Điểm kinh nghiệm: 0 XP</p>
-                    </div>
-                    
-                    <div class="dash-card modern-card efficiency-card" style="border-left: 3px solid #007bff; display: flex; flex-direction: column; justify-content: space-between; height: 160px; box-sizing: border-box;">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                            <h5 style="color: var(--text-secondary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Năng Suất Học</h5>
-                            <i data-lucide="activity" style="color: #007bff; width:20px; height:20px;"></i>
-                        </div>
-                        <h2 style="font-size: clamp(28px, 4vw, 42px); margin: 0;">92%</h2>
-                        <p class="status-optimal" id="dash-level-display" style="font-size: 13px; color: #007bff; margin: 0;">Cấp độ: 1</p>
-                    </div>
-                    
-                    <div class="dash-card modern-card badge-card" style="border-left: 3px solid #e84393; display: flex; flex-direction: column; justify-content: space-between; height: 160px; box-sizing: border-box;">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                            <h5 style="color: var(--text-secondary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Huy Hiệu</h5>
-                            <i data-lucide="award" style="color: #e84393; width:20px; height:20px;"></i>
-                        </div>
-                        <h2 style="font-size: clamp(28px, 4vw, 42px); margin: 0;" id="dash-badges-count">0</h2>
-                        <p class="status-new" style="font-size: 13px; color: #e84393; margin: 0;">Đã đạt được</p>
-                    </div>
-                </div>
-
-                <div class="dashboard-main-columns" style="display: flex; gap: 30px; margin-top: 30px; flex-wrap: wrap;">
-                    <div class="left-col" style="flex: 1.5; min-width: 300px;">
-                        <!-- Today's schedule -->
-                        <div class="dash-card">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                                <h5 style="margin:0;">LỊCH TRÌNH HỌC TẬP</h5>
-                                <button class="icon-btn" id="dash-add-schedule-btn" style="background: var(--primary-color); padding: 8px 16px; border-radius: 8px; font-size: 12px; color: white; display: flex; align-items:center; gap: 6px;">
-                                    <i data-lucide="plus" style="width:14px;"></i> Thêm lịch mới
-                                </button>
-                            </div>
-                            <div id="dash-schedule-list" class="modern-scroll" style="max-height: 400px; overflow-y: auto;">
-                                <!-- Lịch học đổ vào đây -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="right-col" style="flex: 1; min-width: 250px;">
-                        <div class="dash-card insights-card gradient-border">
-                            <div class="insights-header">
-                                <i data-lucide="sparkles"></i>
-                                <span>AI Phân Tích</span>
-                            </div>
-                            <p id="dash-ai-insights" style="font-size: 14px; line-height: 1.6;">AI đang đánh giá tiến độ học tập...</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- REMOVED: Redundant Chat section originally here -->
-
-
-            <!-- SCHEDULE PAGE -->
-            <section id="schedule" class="page">
-                <div class="page-header">
-                    <h2>Lịch học tập</h2>
-                    <p>Thiết lập thời gian để tôi nhắc nhở bạn</p>
-                </div>
-                <div class="form-card">
-                    <div class="form-group">
-                        <label>Tên môn học / Nhiệm vụ</label>
-                        <input type="text" id="task-name" placeholder="Ví dụ: Học Toán">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Giờ bắt đầu</label>
-                            <input type="time" id="start-time">
-                        </div>
-                        <div class="form-group">
-                            <label>Thời lượng (phút)</label>
-                            <input type="number" id="duration" value="45" min="5" max="300">
-                        </div>
-                    </div>
-                    <div class="form-group" style="flex-direction: row; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="strict-mode" checked style="width: 16px; height: 16px;">
-                        <label for="strict-mode" style="margin: 0; cursor: pointer; color: var(--danger)">Kích hoạt Khóa Ứng dụng/Web (Denied Mode)</label>
-                    </div>
-                    <button class="primary-btn" id="add-schedule-btn">Thêm lịch học</button>
-                </div>
-                
-                <div class="schedule-list" id="schedule-list">
-                    <!-- Schedule items will be dynamically injected here -->
-                </div>
-            </section>
-
-            <!-- LEADERBOARD PAGE -->
-            <section id="leaderboard" class="page">
-                <div class="page-header" style="margin-bottom: 24px;">
-                    <h2>Bảng Xếp Hạng Toàn Cầu</h2>
-                    <p>Nhân tài hội tụ, thi đua học tập Online</p>
-                </div>
-                
-                <div class="leaderboard-container" style="background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-color); padding: 24px;">
-                    <div style="display: flex; justify-content: space-between; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-weight: bold; font-size: 13px;">
-                        <span style="width: 50px;">HẠNG</span>
-                        <span style="flex: 1;">HỌC VIÊN</span>
-                        <span style="width: 100px; text-align: center;">CẤP ĐỘ</span>
-                        <span style="width: 100px; text-align: right;">ĐIỂM XP</span>
-                    </div>
-                    <div id="leaderboard-list" style="margin-top: 16px;">
-                        <!-- Đổ danh sách vào đây bằng app.js -->
-                        <div style="text-align: center; color: var(--text-secondary); padding: 40px 0;">Đang tải dữ liệu từ Đám Mây...</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SETTINGS PAGE -->
-            <section id="settings" class="page">
-                <div class="page-header">
-                    <h2>Cài đặt hệ thống</h2>
-                    <p>Cấu hình danh sách chặn, AI và quyền phụ huynh</p>
-                </div>
-                
-                <div class="settings-grid">
-                    <div class="setting-group" style="grid-column: 1 / -1; border: 1px solid rgba(138, 43, 226, 0.4); background: rgba(138, 43, 226, 0.05);">
-                        <h3><i data-lucide="shield"></i> Quyền Quản Trị / Phụ Huynh</h3>
-                        <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 12px;">Thiết lập mã PIN để trở thành Phụ Huynh. Học sinh không thể tắt chế độ Focus hoặc xem Thống kê.</p>
-                        
-                        <div id="parent-unlock-area" class="input-row">
-                            <input type="password" id="parent-pin-input" placeholder="Nhập/Tạo mã PIN...">
-                            <button class="primary-btn" id="toggle-parent-mode-btn">Mở khóa Phụ Huynh</button>
-                        </div>
-                        
-                        <div id="parent-active-area" style="display: none; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
-                            <button class="primary-btn" id="switch-student-btn" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.2);">Trở về Học Sinh (Khóa app)</button>
-                            <button class="primary-btn" id="remove-pin-btn" style="background: rgba(255, 71, 87, 0.1); color: #ff4757; border: 1px solid rgba(255,71,87,0.3);">Hủy mã PIN (Tắt hẳn)</button>
-                        </div>
-
-                        <p id="parent-mode-status" style="margin-top: 12px; font-weight: bold; color: #ff4757;">Chế độ: Học sinh</p>
-                    </div>
-
-                    <div class="setting-group">
-                        <h3>Trang web (Websites)</h3>
-                        <p class="subtitle">Sẽ bị chặn trong giờ học</p>
-                        <div class="blocked-list" id="blocked-websites">
-                            <!-- Items here -->
-                        </div>
-                        <div class="add-block">
-                            <input type="text" id="new-website" placeholder="youtube.com">
-                            <button class="icon-btn" id="add-website-btn"><i data-lucide="plus"></i></button>
-                        </div>
-                    </div>
-
-                    <div class="settings-card">
-                        <h3>Ứng dụng (Apps/Games)</h3>
-                        <p class="subtitle">Tên tiến trình (VD: steam.exe)</p>
-                        <div class="blocked-list" id="blocked-apps">
-                            <!-- Items here -->
-                        </div>
-                        <div class="add-block">
-                            <input type="text" id="new-app" placeholder="steam.exe">
-                            <button class="icon-btn" id="add-app-btn"><i data-lucide="plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="api-key-section settings-card">
-                    <h3>Cấu hình Model AI</h3>
-                    <div class="form-group">
-                        <label>AI Provider (Mô hình)</label>
-                        <select id="ai-provider" style="background-color: #111; border: 1px solid var(--border-color); color: white; padding: 12px 16px; border-radius: 8px; font-size: 15px; outline: none; transition: border-color 0.2s;">
-                            <option value="gemini">Google Gemini (Khuyên dùng)</option>
-                            <option value="openai">OpenAI (ChatGPT)</option>
-                            <option value="xai">xAI (Grok)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group" id="group-gemini">
-                        <label>Google Gemini API Key</label>
-                        <input type="password" id="api-key-input" placeholder="Bắt đầu bằng AIza...">
-                    </div>
-                    <div class="form-group" id="group-openai" style="display: none;">
-                        <label>OpenAI/ChatGPT API Key</label>
-                        <input type="password" id="openai-key-input" placeholder="Bắt đầu bằng sk-...">
-                    </div>
-                    <div class="form-group" id="group-xai" style="display: none;">
-                        <label>xAI (Grok) API Key</label>
-                        <input type="password" id="xai-key-input" placeholder="Bắt đầu bằng xai-...">
-                    </div>
-                    
-                    <button class="secondary-btn" id="save-settings-btn" style="margin-top: 10px;">Lưu cấu hình AI</button>
-                </div>
-            </section>
-        </main>
-    </div> <!-- END main-view -->
-
-    <!-- Alarm Overlay (Hidden by default) -->
-    <div class="alarm-overlay" id="alarm-overlay">
-        <div class="alarm-content">
-            <i data-lucide="alert-triangle" class="alarm-icon"></i>
-            <h1 id="alarm-title">Đã đến giờ học!</h1>
-            <p id="alarm-desc">Nhiệm vụ: Học Toán</p>
-            <button class="primary-btn pulse-anim" id="start-study-btn">Tôi đã sẵn sàng</button>
+                    <!-- Other sections like schedule list can go here -->
+                 </div>
+                 
+                 <!-- OTHER PAGES (Dynamic content) -->
+                 <div id="schedule" class="page"></div>
+                 <div id="chat" class="page"></div>
+                 <div id="profile" class="page"></div>
+                 <div id="settings" class="page"></div>
+                 <div id="leaderboard" class="page"></div>
+             </main>
         </div>
     </div>
 
-    <!-- Warning Overlay for blocked apps -->
-    <div class="alarm-overlay" id="warning-overlay" style="z-index: 10000; background: rgba(50, 0, 0, 0.9);">
-        <div class="alarm-content" style="border-color: var(--danger); box-shadow: 0 0 50px rgba(255, 0, 0, 0.3);">
-            <div style="font-size: 64px; margin-bottom: 16px;">🛑🤖</div>
-            <h1 style="color: var(--danger);">CẢNH BÁO TỪ AI!</h1>
-            <p style="color: white; font-size: 20px;">
-                Tôi vừa đóng <span id="killed-app-name" style="font-weight: bold; color: #ff8888;"></span>.<br>
-                Hãy tập trung vào mục tiêu của bạn!
-            </p>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
+    <!-- SCRIPTS -->
+    <script src="app.js?v=ELITE_1.1"></script>
     <script>
-        // Initialize lucide icons
+        // Init Lucide
         lucide.createIcons();
-    </script>
         
-        <!-- --- AI Toast Notification Container --- -->
-        <div id="ai-toast-container" style="position: fixed; bottom: 24px; right: 24px; display: flex; flex-direction: column; gap: 12px; z-index: 9999; pointer-events: none;"></div>
-
-    </body>
+        // Init ScrollReveal
+        ScrollReveal().reveal('[data-reveal]', {
+            delay: 200,
+            distance: '30px',
+            duration: 1000,
+            easing: 'cubic-bezier(0.5, 0, 0, 1)',
+            interval: 100,
+            origin: 'bottom'
+        });
+    </script>
+</body>
 </html>

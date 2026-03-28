@@ -209,22 +209,23 @@ async def delete_my_schedule(schedule_id: int, user_id: int = Depends(get_curren
     query_db("DELETE FROM schedules WHERE id = ? AND user_id = ?", (schedule_id, user_id))
     return {"success": True}
 
-# --- STATIC FILES AS LAST RESORT ---
+# --- STATIC FILES & SPA SUPPORT ---
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 WEB_PATH = os.path.join(os.path.dirname(CURRENT_DIR), "web")
-if not os.path.exists(WEB_PATH): WEB_PATH = os.path.join(CURRENT_DIR, "web")
+if not os.path.exists(WEB_PATH): 
+    WEB_PATH = os.path.join(CURRENT_DIR, "web")
 
 @app.get("/docs", include_in_schema=False)
 async def scalar_html():
     return get_scalar_api_reference(openapi_url=app.openapi_url, title=app.title)
 
-@app.get("/", include_in_schema=False)
-async def read_index():
-    idx = os.path.join(WEB_PATH, "index.html")
-    return FileResponse(idx) if os.path.exists(idx) else {"msg": "Neuralis Online"}
-
+# Mount static files at root with html=True to automatically serve index.html
 if os.path.exists(WEB_PATH):
-    app.mount("/", StaticFiles(directory=WEB_PATH), name="static")
+    app.mount("/", StaticFiles(directory=WEB_PATH, html=True), name="static")
+else:
+    @app.get("/")
+    async def root_fallback():
+        return {"msg": "Neuralis Online (Web folder not found)"}
 
 if __name__ == "__main__":
     import uvicorn

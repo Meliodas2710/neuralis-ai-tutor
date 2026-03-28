@@ -80,9 +80,11 @@ function initApp() {
         else header.classList.remove('scrolled');
     });
 
-    // --- NAVIGATION ---
+    // --- NAVIGATION & VIEW MANAGEMENT ---
     window.showAuthView = function() {
         document.getElementById('auth-view').style.display = 'block';
+        document.getElementById('landing-view').style.display = 'none';
+        document.querySelector('.main-header').style.display = 'none';
         document.body.style.overflow = 'hidden';
     };
 
@@ -90,13 +92,23 @@ function initApp() {
         document.getElementById('auth-view').style.display = 'none';
         document.getElementById('landing-view').style.display = 'block';
         document.getElementById('main-view').style.display = 'none';
+        document.querySelector('.main-header').style.display = 'block';
         document.body.style.overflow = 'auto';
     };
 
     window.setRole = function(role) {
         currentRole = role;
         document.querySelectorAll('.role-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.textContent.toLowerCase().includes(role));
+            const isMatch = btn.textContent.toLowerCase().includes(role);
+            btn.classList.toggle('active', isMatch);
+            // In the new Elite UI, inactive buttons are transparent
+            if (!isMatch) {
+                btn.style.background = 'transparent';
+                btn.style.color = 'var(--text-muted)';
+            } else {
+                btn.style.background = 'var(--primary-color)';
+                btn.style.color = '#000';
+            }
         });
         document.getElementById('auth-title').textContent = (role === 'student') ? 'WELCOME STUDENT' : 'WELCOME PARENT';
     };
@@ -110,16 +122,17 @@ function initApp() {
         document.getElementById('landing-view').style.display = 'none';
         document.querySelector('.main-header').style.display = 'none';
         document.getElementById('auth-view').style.display = 'none';
-        document.getElementById('main-view').style.display = 'flex';
+        document.getElementById('main-view').style.display = 'block';
         loadDashboard();
     }
 
-    // Auth Submit
+    // Auth Submit Toggle
     let isRegisterMode = false;
     document.getElementById('auth-toggle-btn').addEventListener('click', () => {
         isRegisterMode = !isRegisterMode;
-        document.getElementById('auth-submit-btn').textContent = isRegisterMode ? 'Đăng ký ngay' : 'Tiếp tục ngay';
-        document.getElementById('auth-toggle-btn').textContent = isRegisterMode ? 'Đã có tài khoản? Đăng nhập' : 'Chưa có tài khoản? Đăng ký ngay';
+        document.getElementById('auth-submit-btn').textContent = isRegisterMode ? 'Đăng ký ngay' : 'Đăng nhập ngay';
+        document.getElementById('auth-toggle-btn').textContent = isRegisterMode ? 'Đăng nhập' : 'Đăng ký ngay';
+        document.getElementById('auth-title').textContent = isRegisterMode ? 'CREATE ACCOUNT' : 'CHÀO MỪNG TRỞ LẠI';
     });
 
     document.getElementById('auth-submit-btn').addEventListener('click', async () => {
