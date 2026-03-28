@@ -1,5 +1,93 @@
-let appInitialized = false;
+let currentLang = localStorage.getItem('appLang') || 'en';
 let currentRole = 'student';
+
+const translations = {
+    en: {
+        nav_home: "Home",
+        nav_features: "Features",
+        nav_pricing: "Pricing",
+        nav_login: "Login",
+        nav_get_started: "Get Started",
+        hero_title: "Unlock Your<br>Cognitive Edge.",
+        hero_desc: "The world's first AI Study Agent designed specifically for high-achieving students and proactive parents who refuse to settle.",
+        btn_transformation: "Begin Transformation",
+        btn_watch: "Watch the future in 60s",
+        tag_excellence: "BUILT FOR EXCELLENCE",
+        heading_focus: "Designed for absolute <br>intellectual focus.",
+        feature_paths_title: "Hyper-Personalized <br>Learning Paths",
+        feature_paths_desc: "Neuralis understands your unique learning gaps and constructs a tailored path to mastery in real-time.",
+        feature_shield_title: "Distraction Shield",
+        feature_shield_desc: "AI-driven biological focus monitoring that alerts you the moment your attention drifts.",
+        feature_schedule_title: "Automated Schedule Mastery",
+        feature_schedule_desc: "Dynamic calendars that adapt to your life, extracurriculars, and optimal focus sessions.",
+        feature_transparency_title: "Unified parent & <br>student transparency",
+        feature_transparency_desc: "Stop the friction. Parents get real-time insights without being overbearing, fostering a healthy path to success.",
+        auth_welcome_student: "WELCOME STUDENT",
+        auth_welcome_parent: "WELCOME PARENT",
+        auth_back_title: "WELCOME BACK",
+        auth_create_title: "CREATE ACCOUNT",
+        auth_login_btn: "Login Now",
+        auth_register_btn: "Register Now",
+        auth_toggle_reg: "Need an account? Register",
+        auth_toggle_login: "Have an account? Login",
+        err_missing: "Missing info",
+        err_server_busy: "Server is busy or starting up (Cold Start)",
+        toast_success_reg: "Registration successful! Please login.",
+        preloader_text: "NEURALIS"
+    },
+    vi: {
+        nav_home: "Trang chủ",
+        nav_features: "Tính năng",
+        nav_pricing: "Bảng giá",
+        nav_login: "Đăng nhập",
+        nav_get_started: "Bắt đầu ngay",
+        hero_title: "Khai phá sức mạnh<br>Trí tuệ của bạn.",
+        hero_desc: "Đại lý học tập AI đầu tiên trên thế giới được thiết kế riêng cho học sinh ưu tú và phụ huynh chủ động.",
+        btn_transformation: "Bắt đầu chuyển đổi",
+        btn_watch: "Xem tương lai trong 60s",
+        tag_excellence: "XÂY DỰNG VÌ SỰ ƯU TÚ",
+        heading_focus: "Thiết kế cho sự <br>tập trung trí tuệ tuyệt đối.",
+        feature_paths_title: "Lộ trình học tập <br>Cá nhân hóa cao",
+        feature_paths_desc: "Neuralis thấu hiểu lỗ hổng kiến thức duy nhất của bạn và xây dựng lộ trình tiến tới sự thành thạo theo thời gian thực.",
+        feature_shield_title: "Lớp khiên Tập trung",
+        feature_shield_desc: "Giám sát sự tập trung sinh học dựa trên AI, cảnh báo bạn ngay lập tức khi tâm trí xao nhãng.",
+        feature_schedule_title: "Làm chủ Lịch trình tự động",
+        feature_schedule_desc: "Lịch linh động thích ứng với cuộc sống, hoạt động ngoại khóa và các buổi tập trung tối ưu của bạn.",
+        feature_transparency_title: "Phụ huynh & Học sinh <br>Minh bạch hợp nhất",
+        feature_transparency_desc: "Xóa bỏ xung đột. Phụ huynh nhận thông tin chi tiết theo thời gian thực mà không gây áp lực, thúc đẩy con đường thành công.",
+        auth_welcome_student: "CHÀO MỪNG HỌC SINH",
+        auth_welcome_parent: "CHÀO MỪNG PHỤ HUYNH",
+        auth_back_title: "CHÀO MỪNG TRỞ LẠI",
+        auth_create_title: "TẠO TÀI KHOẢN",
+        auth_login_btn: "Đăng nhập ngay",
+        auth_register_btn: "Đăng ký ngay",
+        auth_toggle_reg: "Chưa có tài khoản? Đăng ký",
+        auth_toggle_login: "Đã có tài khoản? Đăng nhập",
+        err_missing: "Thiếu thông tin",
+        err_server_busy: "Server đang bận hoặc đang khởi động (Cold Start)",
+        toast_success_reg: "Đăng ký thành công! Hãy đăng nhập.",
+        preloader_text: "NEURALIS"
+    }
+};
+
+window.changeLanguage = function(lang) {
+    currentLang = lang;
+    localStorage.setItem('appLang', lang);
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = translations[lang][key];
+            } else {
+                el.innerHTML = translations[lang][key];
+            }
+        }
+    });
+    // Update active state on buttons if any
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+};
 
 // --- ENVIRONMENT DETECTION & INITIALIZATION ---
 function startApp() {
@@ -14,7 +102,7 @@ function startApp() {
                     return async (...args) => {
                         try {
                             const token = localStorage.getItem('accessToken');
-                            let url = `/${prop}`;
+                            let url = `https://neuralis-ai-tutor.onrender.com/${prop}`;
                             let options = { 
                                 headers: { 
                                     'Content-Type': 'application/json',
