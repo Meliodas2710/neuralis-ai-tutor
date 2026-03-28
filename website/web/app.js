@@ -1,13 +1,13 @@
+let appInitialized = false;
+let currentRole = 'student';
+
 // --- ENVIRONMENT DETECTION & INITIALIZATION ---
-// Detect if we are in a standard browser or Desktop App (pywebview)
 function startApp() {
     if (window.appInitialized) return;
     
     // Fallback for standard browsers: Mock the pywebview API to talk to REST API instead
     if (!window.pywebview || !window.pywebview.api) {
         window.isWebMode = true;
-        console.log("🌐 Running in Browser Mode - Bridging API calls to REST endpoints");
-        
         window.pywebview = {
             api: new Proxy({}, {
                 get: (target, prop) => {
@@ -22,155 +22,89 @@ function startApp() {
                                 } 
                             };
                             
-                            // Guess if it's POST/DELETE based on prop
-                            if (prop.startsWith('delete')) {
-                                options.method = 'DELETE';
-                                url = `/schedules/${args[0]}`; // Simplified for schedule deletion
-                            } else if (args.length > 0 && typeof args[0] === 'object' || ['login', 'register', 'sync_progress', 'add_my_schedule', 'link_account'].includes(prop)) {
+                            if (prop === 'login' || prop === 'register') {
                                 options.method = 'POST';
-                                
-                                // Mapping for specific Pro API endpoints
-                                if (prop === 'login') {
-                                    options.body = JSON.stringify({username: args[0], password: args[1], role: args[2]});
-                                } else if (prop === 'register') {
-                                    options.body = JSON.stringify({username: args[0], password: args[1], role: args[2]});
-                                } else if (prop === 'sync_progress') {
-                                    url = '/sync';
-                                    options.body = JSON.stringify({total_xp: args[0], level: args[1], badges_count: args[2]});
-                                } else if (prop === 'add_my_schedule') {
-                                    url = '/schedules/me';
-                                    options.body = JSON.stringify(args[0]);
-                                } else {
-                                    options.body = JSON.stringify(args[0] || {});
-                                }
+                                options.body = JSON.stringify({username: args[0], password: args[1], role: args[2]});
                             } else {
-                                options.method = 'GET';
-                                // Handle specific GET mappings
-                                if (prop === 'get_my_schedules') url = '/schedules/me';
-                                else if (prop === 'get_user_profile' && args.length > 0) url = `/user/${args[0]}`;
-                                else if (prop === 'get_target_schedules' && args.length > 0) url = `/schedules/${args[0]}`;
+                                options.method = (args.length > 0) ? 'POST' : 'GET';
+                                if (options.method === 'POST') options.body = JSON.stringify(args[0] || {});
                             }
 
                             const response = await fetch(url, options);
-                            if (!response.ok) {
-                                const err = await response.json();
-                                return { success: false, message: err.detail || 'Lỗi kết nối Server' };
-                            }
-                            return await response.json();
+                            const result = await response.json();
+                            if (!response.ok) return { success: false, message: result.detail || 'Lỗi hệ thống' };
+                            return result;
                         } catch (e) {
-                            console.error(`API Call [${prop}] failed:`, e);
-                            return { success: false, message: 'Không thể kết nối tới Server Online' };
+                            return { success: false, message: 'Server đang bận hoặc đang khởi động' };
                         }
                     };
                 }
             })
         };
-    } else {
-        window.isWebMode = false;
-        console.log("🖥️ Running in Desktop Mode (PyWebView)");
     }
-    
     initApp();
 }
 
-// 1. Listen for pywebviewready (Desktop)
 window.addEventListener('pywebviewready', startApp);
-
-// 2. Fallback for Browsers (Web)
-document.addEventListener('DOMContentLoaded', () => {
-    // Wait 500ms to see if pywebviewready fires first, otherwise run browser init
-    setTimeout(startApp, 500);
-});
-
-let appInitialized = false;
-
-// --- Custom AI Toast Notification ---
-window.showAIToast = function(message) {
-    const container = document.getElementById('ai-toast-container');
-    if(!container) return;
-    
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        background: rgba(30, 27, 46, 0.95);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(108, 92, 231, 0.4);
-        border-left: 4px solid #a29bfe;
-        border-radius: 12px;
-        padding: 16px 20px;
-        display: flex;
-        align-items: flex-start;
-        gap: 16px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(108, 92, 231, 0.2);
-        color: white;
-        width: 320px;
-        transform: translateX(120%);
-        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    `;
-    
-    const iconHtml = `<div style="background: rgba(108, 92, 231, 0.15); border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><i data-lucide="bot" style="color: #a29bfe; width: 20px; height: 20px;"></i></div>`;
-    const textHtml = `
-        <div>
-            <h4 style="margin: 0 0 6px 0; font-size: 15px; color: #a29bfe;">AI Study Tutor</h4>
-            <p style="margin: 0; font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.5;">${message}</p>
-        </div>
-    `;
-    
-    toast.innerHTML = iconHtml + textHtml;
-    container.appendChild(toast);
-    
-    if (window.lucide) window.lucide.createIcons();
-    
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            toast.style.transform = 'translateX(0)';
-        });
-    });
-    
-    setTimeout(() => {
-        toast.style.transform = 'translateX(120%)';
-        toast.style.opacity = '0';
-        setTimeout(() => {
-            if(toast.parentElement) toast.remove();
-        }, 500);
-    }, 5000);
-};
+document.addEventListener('DOMContentLoaded', () => setTimeout(startApp, 500));
 
 function initApp() {
     if (appInitialized) return;
     appInitialized = true;
     
-    let mode = 'login'; // 'login' or 'register'
+    // --- PRELOADER LOGIC ---
+    setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.style.opacity = '0';
+            setTimeout(() => preloader.style.display = 'none', 600);
+        }
+    }, 2500);
 
-    const authView = document.getElementById('auth-view');
-    const mainView = document.getElementById('main-view');
-    const authToggleBtn = document.getElementById('auth-toggle-btn');
-    const authSubmitBtn = document.getElementById('auth-submit-btn');
-    const authTitle = document.getElementById('auth-title');
-
-    // --- Navigation & View Switching ---
-    window.showAuthView = function() {
-        document.getElementById('landing-view').style.display = 'none';
-        document.querySelector('.main-header').style.display = 'none';
-        document.getElementById('auth-view').style.display = 'flex';
-        if (window.lucide) window.lucide.createIcons();
+    // --- SCROLL REVEAL ---
+    const revealCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
     };
+    const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.1 });
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
 
-    window.toggleMobileMenu = function() {
-        const nav = document.querySelector('.header-nav');
-        nav.classList.toggle('mobile-show');
+    // --- HEADER SCROLL EFFECT ---
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.main-header');
+        if (window.scrollY > 50) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+    });
+
+    // --- NAVIGATION ---
+    window.showAuthView = function() {
+        document.getElementById('auth-view').style.display = 'block';
+        document.body.style.overflow = 'hidden';
     };
 
     window.goHome = function() {
-        document.getElementById('landing-view').style.display = 'block';
-        document.querySelector('.main-header').style.display = 'flex';
         document.getElementById('auth-view').style.display = 'none';
+        document.getElementById('landing-view').style.display = 'block';
         document.getElementById('main-view').style.display = 'none';
+        document.body.style.overflow = 'auto';
     };
 
-    // Auto-login check (expanded)
+    window.setRole = function(role) {
+        currentRole = role;
+        document.querySelectorAll('.role-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent.toLowerCase().includes(role));
+        });
+        document.getElementById('auth-title').textContent = (role === 'student') ? 'WELCOME STUDENT' : 'WELCOME PARENT';
+    };
+
+    // Auto-login check
     const savedToken = localStorage.getItem('accessToken');
     if (savedToken) {
-        window.currentUserId = parseInt(localStorage.getItem('currentUserId'));
+        window.currentUserId = localStorage.getItem('currentUserId');
         window.currentUserRole = localStorage.getItem('currentUserRole');
         
         document.getElementById('landing-view').style.display = 'none';
@@ -178,134 +112,57 @@ function initApp() {
         document.getElementById('auth-view').style.display = 'none';
         document.getElementById('main-view').style.display = 'flex';
         loadDashboard();
-        updateSidebarForRole(window.currentUserRole);
-    } else {
-        // Initial state
-        document.getElementById('landing-view').style.display = 'block';
-        document.querySelector('.main-header').style.display = 'flex';
-        document.getElementById('auth-view').style.display = 'none';
-        document.getElementById('main-view').style.display = 'none';
     }
 
-    // --- Theme Toggle Logic ---
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') { document.body.classList.add('light-theme'); }
-    
-    [document.getElementById('theme-toggle-btn'), document.getElementById('app-theme-toggle')].forEach(btn => {
-        if (!btn) return;
-        btn.addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
-            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
-        });
+    // Auth Submit
+    let isRegisterMode = false;
+    document.getElementById('auth-toggle-btn').addEventListener('click', () => {
+        isRegisterMode = !isRegisterMode;
+        document.getElementById('auth-submit-btn').textContent = isRegisterMode ? 'Đăng ký ngay' : 'Tiếp tục ngay';
+        document.getElementById('auth-toggle-btn').textContent = isRegisterMode ? 'Đã có tài khoản? Đăng nhập' : 'Chưa có tài khoản? Đăng ký ngay';
     });
 
-    // --- Role tabs cosmetic toggle ---
-    document.querySelectorAll('.role-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
-            e.currentTarget.classList.add('active');
-        });
-    });
-
-    // Toggle between login and register
-    authToggleBtn.addEventListener('click', () => {
-        if(mode === 'login') {
-            mode = 'register';
-            authTitle.textContent = 'CREATE ACCOUNT';
-            authSubmitBtn.textContent = 'Create Account';
-            authToggleBtn.textContent = 'Login (Đăng Nhập)';
-        } else {
-            mode = 'login';
-            authTitle.textContent = 'LOGIN / REGISTER';
-            authSubmitBtn.textContent = 'Login / Continue';
-            authToggleBtn.textContent = 'Đăng ký ngay (Create Account)';
-        }
-    });
-
-    authSubmitBtn.addEventListener('click', async () => {
+    document.getElementById('auth-submit-btn').addEventListener('click', async () => {
         const u = document.getElementById('auth-username').value.trim();
         const p = document.getElementById('auth-password').value.trim();
-        if(!u || !p) { alert("Vui lòng nhập đủ thông tin"); return; }
-        
-        // Validation check (Frontend)
-        if (mode === 'register') {
-            if (u.length < 4) { alert("Username phải từ 4 ký tự trở lên"); return; }
-            if (p.length < 8) { alert("Mật khẩu phải từ 8 ký tự trở lên để đảm bảo an toàn"); return; }
-        }
+        if (!u || !p) { alert("Thiếu thông tin"); return; }
 
-        authSubmitBtn.disabled = true;
-        const oldText = authSubmitBtn.textContent;
-        authSubmitBtn.textContent = "🚀 Đang đánh thức Server (Vui lòng chờ 30-60s)...";
-        
+        const btn = document.getElementById('auth-submit-btn');
+        btn.disabled = true;
+        const oldText = btn.textContent;
+        btn.textContent = "🚀 Đang xử lý...";
+
         try {
-            // Hiển thị thông báo hỗ trợ người dùng khi Server Render đang khởi động
-            window.showAIToast("Hệ thống đang được đánh thức từ Cloud. Quá trình này có thể mất tới 1 phút trong lần đầu tiên. Đừng tắt trình duyệt nhé!");
+            const api = window.pywebview.api;
+            let res = isRegisterMode ? await api.register(u, p, currentRole) : await api.login(u, p, currentRole);
 
-            if (window.pywebview && window.pywebview.api) {
-                let res;
-                let r = document.querySelector('.role-btn.active').textContent.toLowerCase().includes('student') ? 'student' : 'parent';
-                if(mode === 'login') {
-                    res = await window.pywebview.api.login(u, p, r);
+            if (res.success) {
+                if (isRegisterMode) {
+                    alert("Đăng ký thành công! Hãy đăng nhập.");
+                    document.getElementById('auth-toggle-btn').click();
                 } else {
-                    res = await window.pywebview.api.register(u, p, r);
-                    if(res.success) {
-                        alert("Đăng ký thành công - Mời bạn đăng nhập.");
-                        authToggleBtn.click();
-                    } else {
-                        alert("Lỗi bảo mật: " + res.message);
-                    }
-                    return;
+                    localStorage.setItem('accessToken', res.access_token);
+                    localStorage.setItem('currentUserId', res.user_data.id);
+                    localStorage.setItem('currentUserRole', res.user_data.role);
+                    location.reload(); // Refresh to load app
                 }
-
-                if(res.success) {
-                    const user = res.user_data;
-                    if (res.access_token) {
-                        localStorage.setItem('accessToken', res.access_token);
-                    }
-                    localStorage.setItem('currentUserId', user.id);
-                    localStorage.setItem('currentUserRole', user.role);
-                    localStorage.setItem('linkedStudentId', user.linked_student_id || '');
-
-                    authView.style.display = 'none';
-                    mainView.style.display = 'flex';
-                    
-                    window.currentUserRole = user.role;
-                    window.currentUserId = user.id;
-                    window.linkedStudentId = user.linked_student_id;
-                    
-                    updateSidebarForRole(user.role);
-                    loadLeaderboard();
-                    
-                    document.querySelector(`[data-page="main-dashboard"]${user.role === 'parent' ? '#nav-parent-dashboard' : ''}`).click();
-                    loadDashboard();
-
-                    if (user.role === 'student') {
-                        loadChatSessions();
-                    }
-                } else {
-                    alert(res.message);
-                }
+            } else {
+                alert("Lỗi: " + res.message);
             }
-        } catch(e) {
-            alert("Lỗi hệ thống: Server đang bận hoặc đang khởi động lại. Vui lòng thử lại sau 30 giây.");
+        } catch (e) {
+            alert("Lỗi kết nối Server");
         } finally {
-            authSubmitBtn.disabled = false;
-            authSubmitBtn.textContent = oldText;
+            btn.disabled = false;
+            btn.textContent = oldText;
         }
     });
 
-    document.getElementById('logout-btn').addEventListener('click', async () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('currentUserId');
-        if(window.pywebview && window.pywebview.api) {
-            await window.pywebview.api.logout();
-        }
-        mainView.style.display = 'none';
-        authView.style.display = 'flex';
-        document.getElementById('auth-password').value = '';
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        localStorage.clear();
+        location.reload();
     });
 
-    // Navigation routing
+    // Navigation routing logic moved here to ensure elements exist
     const navLinks = document.querySelectorAll('.nav-links li');
     const pages = document.querySelectorAll('.page');
 
@@ -1306,4 +1163,4 @@ function initApp() {
     };
 
     // Initial loads removed from here, moved to post-login
-}
+} // FINAL CLOSING OF initApp

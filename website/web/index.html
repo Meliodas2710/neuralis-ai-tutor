@@ -12,103 +12,102 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="logo-text" style="font-size: 32px;">Neuralis AI</div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+        <p style="margin-top: 20px; font-size: 13px; color: var(--text-secondary);">Đang đánh thức hệ thống AI...</p>
+    </div>
+
     <!-- HEADER -->
     <header class="main-header">
         <div class="header-container">
-            <div class="logo-text">Neuralis AI</div>
+            <div class="logo-text" onclick="goHome()">Neuralis AI</div>
             <nav class="header-nav">
                 <a href="#features">Features</a>
                 <a href="#about">About</a>
-                <button class="pill-btn nav-btn" onclick="showAuthView()">Log In</button>
+                <button class="pill-btn nav-btn" onclick="showAuthView()">Get Started</button>
             </nav>
-            <button class="hamburger-btn" onclick="toggleMobileMenu()">
-                <i data-lucide="menu"></i>
-            </button>
         </div>
     </header>
 
     <!-- LANDING PAGE VIEW -->
     <div id="landing-view" class="view-container">
+        <!-- Hero Section -->
         <section class="hero-section">
-            <div class="hero-content">
-                <div class="hero-badge">THE INTELLIGENT EDGE</div>
-                <h1 class="hero-title"><span class="gradient" style="background: linear-gradient(135deg, #8a7ffb 0%, #3b82f6 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Adaptive Mastery</span> for Digital Minds</h1>
-                <p class="hero-desc">Bứt phá mọi giới hạn tập trung với AI Tutor - Người bạn đồng hành quản lý học tập thế hệ mới.</p>
-                <div class="hero-actions">
-                    <button class="pill-btn primary-pulsing" onclick="showAuthView()">Bắt đầu ngay</button>
-                    <button class="pill-btn secondary">Tìm hiểu thêm</button>
-                </div>
+            <div class="hero-badge" data-reveal>
+                <span>✨ THE NEXT GEN AI TUTOR IS HERE</span>
+            </div>
+            <h1 class="hero-title" data-reveal>
+                <span class="gradient">Master Your Focus.</span>
+                <span>Unlock Your Potential.</span>
+            </h1>
+            <p class="hero-desc" data-reveal>
+                Neuralis là trợ lý AI học tập thế hệ mới, giúp bạn quản lý thời gian, chặn xao nhãng và bứt phá điểm số với lộ trình cá nhân hóa 1:1.
+            </p>
+            <div class="hero-actions" data-reveal>
+                <button class="pill-btn primary-pulsing" onclick="showAuthView()">Bắt đầu ngay miễn phí</button>
+                <button class="pill-btn secondary-glass">Xem bản Demo</button>
             </div>
             
-            <div class="hero-image-container">
-                <img src="hero_ai_tutor_1774625820484.jpg" alt="Neuralis AI Tutor" class="hero-img">
+            <div class="hero-image-container" data-reveal>
+                <div class="hero-bg-blur"></div>
+                <!-- Hero Image can be added here -->
             </div>
-
-            <div class="hero-bg-blur"></div>
         </section>
 
+        <!-- Bento Features Section -->
         <section id="features" class="features-section">
+            <span class="section-tag" data-reveal>FEATURES</span>
+            <h2 class="section-title" data-reveal>Được thiết kế cho sự tập trung tuyệt đối</h2>
+            
             <div class="bento-grid">
-                <div class="bento-item wide">
+                <div class="bento-item wide" data-reveal>
                     <div class="bento-icon"><i data-lucide="zap"></i></div>
-                    <h3>Cognitive Insights</h3>
-                    <p>Phân tích dữ liệu học tập và sự tập trung theo thời gian thực.</p>
+                    <h3>AI Cognitive Insights</h3>
+                    <p>Hệ thống AI phân tích thói quen học tập của bạn theo thời gian thực, đưa ra những lời khuyên chuẩn xác để tối ưu hóa bộ não.</p>
                 </div>
-                <div class="bento-item tall">
+                <div class="bento-item small" data-reveal>
                     <div class="bento-icon"><i data-lucide="shield-check"></i></div>
                     <h3>Distraction Shield</h3>
-                    <p>Chặn xao nhãng cực mạnh, đảm bảo bạn không bao giờ lệch hướng.</p>
-                    <div class="blocked-app-mini">
-                        <i data-lucide="youtube"></i>
-                        <i data-lucide="facebook"></i>
-                    </div>
+                    <p>Chặn các ứng dụng xao nhãng (Facebook, TikTok) mạnh mẽ trong giờ học.</p>
                 </div>
-                <div class="bento-item">
+                <div class="bento-item tall" data-reveal>
                     <div class="bento-icon"><i data-lucide="brain-circuit"></i></div>
-                    <h3>AI Adaptive Learning</h3>
-                    <p>Tự động điều chỉnh lộ trình học theo từng cá nhân.</p>
+                    <h3>Adaptive Mastery</h3>
+                    <p>Lộ trình học tập tự động điều chỉnh theo tốc độ tiếp thu của bạn, không bao giờ để bạn bị bỏ lại phía sau.</p>
+                </div>
+                <div class="bento-item wide" data-reveal>
+                    <div class="bento-icon"><i data-lucide="trophy"></i></div>
+                    <h3>Gamified Growth</h3>
+                    <p>Hệ thống XP, Level và Bảng xếp hạng giúp việc học trở nên thú vị như đang chơi một tựa game nhập vai.</p>
                 </div>
             </div>
         </section>
     </div>
+
+    <!-- AUTH OVERLAY VIEW -->
+    <div id="auth-view">
         <div class="auth-split">
             <!-- Left Side -->
             <div class="auth-left">
-                <div class="auth-logo">
-                    <h2>The Intelligent Edge</h2>
-                </div>
+                <div class="logo-text" style="font-size: 28px; margin-bottom: 40px;" onclick="goHome()">Neuralis AI</div>
                 <div class="auth-marketing">
-                    <div class="auth-badge">
-                        <i data-lucide="sparkles"></i>
-                        <span>THE NEXT GEN AI TUTOR</span>
-                    </div>
-                    <h1 class="gradient-text">Master focus.<br>Unlock potential.</h1>
-                    <p class="auth-desc">
-                        One account for web and app. Sign up here to start managing your study focus with our Digital Mentor.
-                    </p>
+                    <h1 class="gradient-text">Gia nhập kỷ nguyên học tập mới.</h1>
+                    <p class="auth-desc">Một tài khoản duy nhất cho cả Website và Ứng dụng Desktop. Bắt đầu hành trình của bạn ngay hôm nay.</p>
                     
                     <div class="auth-stats">
                         <div class="stat">
-                            <h3>15k+</h3>
-                            <p>ACTIVE MINDS</p>
+                            <h4>15k+</h4>
+                            <p>USERS</p>
                         </div>
-                        <div class="stat-divider"></div>
                         <div class="stat">
-                            <h3>98%</h3>
+                            <h4>98%</h4>
                             <p>FOCUS RATE</p>
                         </div>
                     </div>
-                    
-                    <button class="download-btn">
-                        <i data-lucide="download"></i>
-                        <div class="dl-text">
-                            <strong>DOWNLOAD APP</strong>
-                            <span>Available on Windows and Web</span>
-                        </div>
-                    </button>
-                </div>
-                <div class="auth-footer">
-                    <p>&copy; 2026 THE INTELLIGENT EDGE. ALL RIGHTS RESERVED.</p>
                 </div>
             </div>
 
@@ -116,31 +115,34 @@
             <div class="auth-right">
                 <div class="auth-form-container">
                     <div class="role-selector">
-                        <p class="section-label" id="auth-title">LOGIN / REGISTER</p>
+                        <p class="section-label" id="auth-title">CHÀO MỪNG TRỞ LẠI</p>
                         <div class="role-tabs">
-                            <button class="role-btn active"><i data-lucide="graduation-cap"></i> Student</button>
-                            <button class="role-btn"><i data-lucide="users"></i> Parent</button>
+                            <button class="role-btn active" onclick="setRole('student')">Student</button>
+                            <button class="role-btn" onclick="setRole('parent')">Parent</button>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="section-label">USERNAME</label>
+                        <label class="section-label">EMAIL HOẶC USERNAME</label>
                         <input type="text" id="auth-username" placeholder="name@example.com">
                     </div>
                     
                     <div class="form-group">
-                        <label class="section-label">PASSWORD</label>
+                        <label class="section-label">MẬT KHẨU</label>
                         <input type="password" id="auth-password" placeholder="••••••••">
                     </div>
                     
-                    <button class="primary-btn pulse-anim gradient-bg" id="auth-submit-btn">Login / Continue</button>
+                    <button class="primary-btn" id="auth-submit-btn">Tiếp tục ngay</button>
                     
                     <div class="auth-switch-container">
-                        <p class="auth-switch-text">Bạn chưa có tài khoản? <span id="auth-toggle-btn">Đăng ký ngay</span></p>
+                        <p>Bạn chưa có tài khoản? <span id="auth-toggle-btn">Đăng ký ngay</span></p>
                     </div>
+
+                    <button class="pill-btn" style="width:100%; margin-top:20px; background:transparent; color:var(--text-muted);" onclick="goHome()">Quay lại trang chủ</button>
                 </div>
             </div>
         </div>
+    </div>
         
         <!-- Theme Toggle Button -->
         <button id="theme-toggle-btn" class="theme-toggle-fixed">
