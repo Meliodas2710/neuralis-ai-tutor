@@ -175,12 +175,17 @@ async def get_me(user_id: int = Depends(get_current_user)):
         return user_dict
     raise HTTPException(status_code=404)
 
+@app.get("/sync", tags=["User Profiles"])
+async def get_sync_status(user_id: int = Depends(get_current_user)):
+    row = query_db("SELECT total_xp, level, badges_count FROM users WHERE id = ?", (user_id,), one=True)
+    if not row: raise HTTPException(status_code=404)
+    return {"success": True, "total_xp": row["total_xp"], "level": row["level"], "badges_count": row["badges_count"]}
+
 @app.post("/sync", tags=["User Profiles"])
 async def sync_progress(data: SyncData, user_id: int = Depends(get_current_user)):
     current = query_db("SELECT total_xp, level FROM users WHERE id = ?", (user_id,), one=True)
     if not current: raise HTTPException(status_code=404)
     
-    # CHỐNG GIẢM CẤP: Chỉ cập nhật nếu giá trị mới LỚN HƠN giá trị hiện tại
     new_xp = max(current["total_xp"], data.total_xp)
     new_level = max(current["level"], data.level)
     

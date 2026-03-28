@@ -119,7 +119,16 @@ function startApp() {
                     return async (...args) => {
                         try {
                             const token = localStorage.getItem('accessToken');
-                            let url = `https://neuralis-ai-tutor.onrender.com/${prop}`;
+                            // Map Python-style names to REST endpoints
+                            let endpoint = prop;
+                            if (prop === 'get_user_profile') endpoint = 'user/me';
+                            if (prop === 'get_schedules') endpoint = 'schedules/me';
+                            if (prop === 'add_schedule') endpoint = 'schedules/me';
+                            if (prop === 'delete_schedule') endpoint = `schedules/${args[0]}`;
+                            if (prop === 'get_leaderboard') endpoint = 'leaderboard';
+                            if (prop === 'get_dashboard_data') endpoint = 'sync'; // Minimal status sync
+                            
+                            let url = `https://neuralis-ai-tutor.onrender.com/${endpoint}`;
                             let options = { 
                                 headers: { 
                                     'Content-Type': 'application/json',
@@ -130,6 +139,11 @@ function startApp() {
                             if (prop === 'login' || prop === 'register') {
                                 options.method = 'POST';
                                 options.body = JSON.stringify({username: args[0], password: args[1], role: args[2]});
+                            } else if (prop === 'add_schedule') {
+                                options.method = 'POST';
+                                options.body = JSON.stringify({task: args[0], time: args[1], duration: args[2], strict_mode: args[3]});
+                            } else if (prop === 'delete_schedule') {
+                                options.method = 'DELETE';
                             } else {
                                 options.method = (args.length > 0) ? 'POST' : 'GET';
                                 if (options.method === 'POST') options.body = JSON.stringify(args[0] || {});
@@ -137,10 +151,20 @@ function startApp() {
 
                             const response = await fetch(url, options);
                             const result = await response.json();
-                            if (!response.ok) return { success: false, message: result.detail || 'Lỗi hệ thống' };
+                            if (!response.ok) {
+                                // FastAPI validation errors are often arrays in 'detail'
+                                const msg = (typeof result.detail === 'string') ? result.detail : 
+                                            (Array.isArray(result.detail) ? result.detail[0].msg : 'Lỗi hệ thống');
+                                return { success: false, message: msg };
+                            }
+                            // Normalize 'get_user_profile' response vs 'get_me'
+                            if (prop === 'get_user_profile' || prop === 'get_me') {
+                                return { ...result, success: true }; 
+                            }
                             return result;
                         } catch (e) {
-                            return { success: false, message: 'Server đang bận hoặc đang khởi động' };
+                            console.error("API Proxy Error:", e);
+                            return { success: false, message: 'Server đang bận (Cold Start) hoặc lỗi kết nối. Vui lòng thử lại sau 30 giây.' };
                         }
                     };
                 }
@@ -192,62 +216,74 @@ function initApp() {
         document.getElementById('auth-title').textContent = (role === 'student') ? 'WELCOME STUDENT' : 'WELCOME PARENT';
     };
 
-    // Auto-login check
-    const savedToken = localStorage.getItem('accessToken');
-    if (savedToken) {
-        window.currentUserId = localStorage.getItem('currentUserId');
-        window.currentUserRole = localStorage.getItem('currentUserRole');
-        
-        document.getElementById('landing-view').style.display = 'none';
-        document.querySelector('.main-header').style.display = 'none';
-        document.getElementById('auth-view').style.display = 'none';
-        document.getElementById('main-view').style.display = 'block';
-        loadDashboard();
-    }
-
     // Auth Submit Toggle
     let isRegisterMode = false;
-    document.getElementById('auth-toggle-btn').addEventListener('click', () => {
-        isRegisterMode = !isRegisterMode;
-        document.getElementById('auth-submit-btn').textContent = isRegisterMode ? 'Đăng ký ngay' : 'Đăng nhập ngay';
-        document.getElementById('auth-toggle-btn').textContent = isRegisterMode ? 'Đăng nhập' : 'Đăng ký ngay';
-        document.getElementById('auth-title').textContent = isRegisterMode ? 'CREATE ACCOUNT' : 'CHÀO MỪNG TRỞ LẠI';
-    });
+    const toggleBtn = document.getElementById('auth-toggle-btn');
+    const submitBtn = document.getElementById('auth-submit-btn');
+    
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            isRegisterMode = !isRegisterMode;
+            submitBtn.textContent = isRegisterMode ? 'Đăng ký ngay' : 'Đăng nhập ngay';
+            toggleBtn.textContent = isRegisterMode ? 'Đăng nhập' : 'Đăng ký ngay';
+            document.getElementById('auth-title').textContent = isRegisterMode ? 'CREATE ACCOUNT' : 'CHÀO MỪNG TRỞ LẠI';
+            console.log("🔄 Auth Mode switched to:", isRegisterMode ? "Register" : "Login");
+        });
+    }
 
-    document.getElementById('auth-submit-btn').addEventListener('click', async () => {
-        const u = document.getElementById('auth-username').value.trim();
-        const p = document.getElementById('auth-password').value.trim();
-        if (!u || !p) { alert("Thiếu thông tin"); return; }
+    if (submitBtn) {
+        submitBtn.addEventListener('click', async () => {
+            const u = document.getElementById('auth-username').value.trim();
+            const p = document.getElementById('auth-password').value.trim();
+            if (!u || !p) { alert("Thiếu thông tin"); return; }
 
-        const btn = document.getElementById('auth-submit-btn');
-        btn.disabled = true;
-        const oldText = btn.textContent;
-        btn.textContent = "🚀 Đang xử lý...";
+            submitBtn.disabled = true;
+            const oldText = submitBtn.textContent;
+            submitBtn.textContent = "🚀 Đang xử lý...";
 
-        try {
-            const api = window.pywebview.api;
-            let res = isRegisterMode ? await api.register(u, p, currentRole) : await api.login(u, p, currentRole);
+            try {
+                const api = window.pywebview.api;
+                let res = isRegisterMode ? await api.register(u, p, currentRole) : await api.login(u, p, currentRole);
 
-            if (res.success) {
-                if (isRegisterMode) {
-                    alert("Đăng ký thành công! Hãy đăng nhập.");
-                    document.getElementById('auth-toggle-btn').click();
+                if (res.success) {
+                    if (isRegisterMode) {
+                        alert("Đăng ký thành công! Hãy đăng nhập.");
+                        toggleBtn.click();
+                    } else {
+                        localStorage.setItem('accessToken', res.access_token);
+                        localStorage.setItem('currentUserId', res.user_data.id);
+                        localStorage.setItem('currentUserRole', res.user_data.role);
+                        location.reload(); 
+                    }
                 } else {
-                    localStorage.setItem('accessToken', res.access_token);
-                    localStorage.setItem('currentUserId', res.user_data.id);
-                    localStorage.setItem('currentUserRole', res.user_data.role);
-                    location.reload(); // Refresh to load app
+                    alert("Lỗi: " + res.message);
                 }
-            } else {
-                alert("Lỗi: " + res.message);
+            } catch (e) {
+                console.error("Auth Exception:", e);
+                alert("Lỗi kết nối Server. Vui lòng thử lại.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = oldText;
             }
-        } catch (e) {
-            alert("Lỗi kết nối Server");
-        } finally {
-            btn.disabled = false;
-            btn.textContent = oldText;
+        });
+    }
+
+    // Auto-login check
+    try {
+        const savedToken = localStorage.getItem('accessToken');
+        if (savedToken) {
+            window.currentUserId = localStorage.getItem('currentUserId');
+            window.currentUserRole = localStorage.getItem('currentUserRole');
+            
+            document.getElementById('landing-view').style.display = 'none';
+            document.querySelector('.main-header').style.display = 'none';
+            document.getElementById('auth-view').style.display = 'none';
+            document.getElementById('main-view').style.display = 'block';
+            loadDashboard();
         }
-    });
+    } catch (e) {
+        console.error("Auto-login failed:", e);
+    }
 
     document.getElementById('logout-btn').addEventListener('click', () => {
         localStorage.clear();
