@@ -42,7 +42,8 @@ const translations = {
         nav_pricing: "Bảng giá",
         nav_login: "Đăng nhập",
         nav_get_started: "Bắt đầu ngay",
-        hero_title: "Khai phá sức mạnh<br>Trí tuệ của bạn.",
+        hero_title_p1: "Khai phá sức mạnh",
+        hero_title_p2: "Trí tuệ của bạn.",
         hero_desc: "Đại lý học tập AI đầu tiên trên thế giới được thiết kế riêng cho học sinh ưu tú và phụ huynh chủ động.",
         btn_transformation: "Bắt đầu chuyển đổi",
         btn_watch: "Xem tương lai trong 60s",
@@ -161,14 +162,15 @@ function initApp() {
 
     // --- NAVIGATION & VIEW MANAGEMENT ---
     window.showAuthView = function() {
-        console.log("Opening Auth View...");
-        const authView = document.getElementById('auth-view');
-        const landingView = document.getElementById('landing-view');
-        if (authView && landingView) {
-            authView.style.display = 'block';
-            authView.style.opacity = '1';
-            authView.style.zIndex = '9999';
-            landingView.style.display = 'none';
+        console.log("SHOWING AUTH OVERLAY");
+        const auth = document.getElementById('auth-view');
+        const landing = document.getElementById('landing-view');
+        if (auth && landing) {
+            auth.style.display = 'block';
+            auth.style.opacity = '1';
+            auth.style.visibility = 'visible';
+            auth.style.zIndex = '9999';
+            landing.style.display = 'none';
             document.querySelector('.main-header').style.display = 'none';
             document.body.style.overflow = 'hidden';
         }

@@ -141,9 +141,11 @@ h1, h2, h3, h4, .logo-text { font-family: 'Manrope', sans-serif; font-weight: 80
 #auth-view {
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: 99999;
     background: #0e0e0e;
     overflow-y: auto;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .auth-split {
@@ -220,10 +222,10 @@ h1, h2, h3, h4, .logo-text { font-family: 'Manrope', sans-serif; font-weight: 80
     color: #000;
 }
 
-/* REVEAL ON SCROLL */
+/* REVEAL ON SCROLL - Simplified for reliability */
 [data-reveal] {
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1; /* Forced visible by default to prevent "Ghost UI" */
+    transform: translateY(0);
     transition: opacity 1.2s cubic-bezier(0.2, 0, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0, 0.2, 1);
 }
 
