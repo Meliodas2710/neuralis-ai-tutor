@@ -5,6 +5,7 @@ gunicorn
 python-multipart
 scalar-fastapi
 python-jose[cryptography]
-passlib[bcrypt]
+passlib
+bcrypt==3.2.0
 slowapi
 email-validator

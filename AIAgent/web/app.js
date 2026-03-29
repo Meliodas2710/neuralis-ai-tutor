@@ -23,7 +23,7 @@ function startApp() {
                             if (prop === 'get_leaderboard') endpoint = 'leaderboard';
                             if (prop === 'get_dashboard_data') endpoint = 'sync';
                             
-                            let url = `https://neuralis-ai-tutor-api.onrender.com/${endpoint}`;
+                            let url = `https://neuralis-ai-tutor.onrender.com/${endpoint}`;
                             let options = { 
                                 headers: { 
                                     'Content-Type': 'application/json',

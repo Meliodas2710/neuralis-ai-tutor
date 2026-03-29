@@ -13,7 +13,7 @@ import blocker
 import ai_chat
 import requests
 
-BASE_URL = "https://neuralis-ai-tutor-api.onrender.com"
+BASE_URL = "https://neuralis-ai-tutor.onrender.com"
 
 class Api:
     def __init__(self):
